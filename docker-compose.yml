@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  flutter:
+    build:
+      context: ./sdk
+      args:
+        flutter_version: stable
+    container_name: flutter-sdk
+    working_dir: /application
+    volumes:
+      - .:/application
+    restart: unless-stopped
