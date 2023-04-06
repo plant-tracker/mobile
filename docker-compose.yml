@@ -1,13 +1,16 @@
 version: "3.8"
 
 services:
-  flutter:
+  dev:
     build:
       context: ./sdk
       args:
         flutter_version: stable
+    tty: true
     container_name: flutter-sdk
-    working_dir: /application
+    working_dir: /application/src
+    ports:
+      - 5037:5037
     volumes:
       - .:/application
     restart: unless-stopped
