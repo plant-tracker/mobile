@@ -43,7 +43,7 @@ It should now be listed on your device list alongside the USB connection.
 ### 3. Connect device to the container
 Detach the device from USB and see if `adb device` returns only wireless connection.
 
-From container, connect to the device using same command as above:
+Connect to the device from within container:
 ```shell
 docker-compose exec dev adb connect your_android_phone_ip:5555
 ```
