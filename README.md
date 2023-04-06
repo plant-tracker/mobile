@@ -3,7 +3,7 @@
 ## Build container
 This application uses [Docker](https://www.docker.com/) for development.
 
-To create container for development, run in the root folder:
+To create a container for development, run in the root folder:
 ```shell
 docker-compose build
 docker-compose up -d
@@ -18,7 +18,7 @@ Add the unzipped folder to system `path` for quick access.
 ### 2. Initialize the connection
 First, enable [Developer Options](https://developer.android.com/studio/debug/dev-options) on your Android Device. You need to enable Debug Mode.
 
-Connect device to the system through USB.
+Connect the device to the system through USB.
 
 Verify that the host machine detects your device:
 ```shell
@@ -33,7 +33,7 @@ Connect to the device wirelessly:
 ```shell
 adb tcpip 5555
 adb connect your_android_phone_ip:5555
-adb device
+adb devices
 ```
 
 You might have to confirm connection on your Android Device.
@@ -41,7 +41,7 @@ You might have to confirm connection on your Android Device.
 It should now be listed on your device list alongside the USB connection.
 
 ### 3. Connect device to the container
-Detach the device from USB and see if `adb device` returns only wireless connection.
+Detach the device from USB and see if `adb devices` returns only wireless connection.
 
 Connect to the device from within container:
 ```shell
@@ -53,9 +53,9 @@ Now you should be able to build and install application:
 ```shell
 docker-compose exec dev flutter run
 ```
-Make sure to grant permissions on your Android Device on pop ups.
+To properly authorize on your Android device, please ensure that you grant the necessary permissions for any pop-up windows or modal prompts that may appear.
 
-If you get `INSTALL_FAILED_USER_RESTRICTED`, you might have to enable additonal settings like `Install via USB` and `Wireless debugging`.
+If you get `INSTALL_FAILED_USER_RESTRICTED`, you might have to enable additional settings like `Install via USB` and `Wireless debugging`.
 
 If application fails in any other way, like missing dependencies, you might want to consider cleaning the build info:
 ```shell
