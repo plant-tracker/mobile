@@ -14,13 +14,19 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: "^0.13.0"
+  flutter_launcher_icons: ^0.13.0
+  flutter_native_splash: ^2.2.19
   flutter_lints: ^2.0.0
 
 flutter_icons:
   ios: false
   android: "ic_launcher"
   image_path: "assets/icons/logo.png"
+
+flutter_native_splash:
+  background_image: "assets/backgrounds/splash.png"
+  background_image_dark: "assets/backgrounds/splash_dark.png"
+  image: assets/icons/logo.png
 
 flutter:
   uses-material-design: true
