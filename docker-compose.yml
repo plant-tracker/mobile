@@ -11,6 +11,7 @@ services:
     working_dir: /application/src
     ports:
       - 5037:5037
+      - 9005:9005
     volumes:
       - .:/application
     restart: unless-stopped
