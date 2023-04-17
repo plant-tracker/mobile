@@ -25,6 +25,9 @@ class App extends ConsumerWidget {
     GoRouter router = ref.watch(goRouterProvider);
     return MaterialApp.router(
       routerConfig: router,
+      theme: ThemeData(
+        primarySwatch: Colors.green,
+      ),
     );
   }
 }
