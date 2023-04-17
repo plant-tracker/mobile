@@ -16,7 +16,7 @@ class AuthService {
       idToken: googleAuth?.idToken,
     );
 
-    return await FirebaseAuth.instance.signInWithCredential(credential);
+    return await firebase.signInWithCredential(credential);
   }
 
   Future<void> signOut() async {
