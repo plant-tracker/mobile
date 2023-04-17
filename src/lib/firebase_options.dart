@@ -53,11 +53,10 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyD6nFM_JHsW-BxmyA519Ta6FFE8QCyNmq0',
-    appId: '1:535186899441:android:faaf1702e6db1d9ce3c450',
-    messagingSenderId: '535186899441',
-    projectId: 'plant-tracker-a2f2c',
-    databaseURL: 'https://plant-tracker-a2f2c-default-rtdb.europe-west1.firebasedatabase.app',
-    storageBucket: 'plant-tracker-a2f2c.appspot.com',
+    apiKey: 'AIzaSyBO0m00X_Uy8fMyi2OWtGPEkJGnal6okMs',
+    appId: '1:875423458247:android:fc755cb20c26661ff52fe2',
+    messagingSenderId: '875423458247',
+    projectId: 'plant-tracker-c90cb',
+    storageBucket: 'plant-tracker-c90cb.appspot.com',
   );
 }
