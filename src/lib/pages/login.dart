@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:plant_tracker/services/auth.dart';
 
-class WelcomePage extends StatefulWidget {
-  const WelcomePage({super.key});
-
+class LoginPage extends ConsumerWidget {
   @override
-  State<WelcomePage> createState() => _WelcomePageState();
-}
-
-class _WelcomePageState extends State<WelcomePage> {
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final _auth = ref.watch(authenticationProvider);
     final ButtonStyle testButtonStyle =
         ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20));
 
@@ -20,14 +15,14 @@ class _WelcomePageState extends State<WelcomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text(
-              'Welcome!',
+              'Please, log in!',
             ),
             ElevatedButton(
               style: testButtonStyle,
-              onPressed: () {
-                Navigator.pushNamed(context, '/home');
+              onPressed: () async {
+                await _auth.signInWithGoogle();
               },
-              child: const Text('Go to home'),
+              child: const Text('Log in with Google'),
             ),
           ],
         ),
