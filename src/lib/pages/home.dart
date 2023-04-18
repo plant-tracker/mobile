@@ -6,8 +6,6 @@ class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final _auth = ref.watch(authenticationProvider);
-    final ButtonStyle testButtonStyle =
-        ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20));
 
     return Scaffold(
       appBar: AppBar(
@@ -24,7 +22,6 @@ class HomePage extends ConsumerWidget {
               'You are logged in!',
             ),
             ElevatedButton(
-              style: testButtonStyle,
               onPressed: () async {
                 await _auth.signOut();
               },
