@@ -10,8 +10,8 @@ services:
     container_name: flutter-sdk
     working_dir: /application/src
     ports:
-      - 5037:5037
-      - 9005:9005
+      - ${ADB_PORT}:${ADB_PORT}
+      - ${FIREBASE_LOGIN_AUTH_PORT}:${FIREBASE_LOGIN_AUTH_PORT}
     volumes:
       - .:/application
     restart: unless-stopped
