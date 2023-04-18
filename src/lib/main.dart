@@ -12,16 +12,11 @@ void main() async {
   runApp(const ProviderScope(child: App()));
 }
 
-final firebaseinitializerProvider = FutureProvider<FirebaseApp>((ref) async {
-  return await Firebase.initializeApp();
-});
-
 class App extends ConsumerWidget {
   const App({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final initialize = ref.watch(firebaseinitializerProvider);
     GoRouter router = ref.watch(goRouterProvider);
     return MaterialApp.router(
       routerConfig: router,
