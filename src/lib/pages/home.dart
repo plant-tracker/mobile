@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:plant_tracker/services/auth.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomePage extends ConsumerWidget {
   @override
@@ -9,23 +10,21 @@ class HomePage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Home"),
+        title: Text(AppLocalizations.of(context)!.titleHome),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              _auth.getUsername() ?? '<empty>',
-            ),
-            const Text(
-              'You are logged in!',
+              AppLocalizations.of(context)!
+                  .hello(_auth.getUsername() ?? '<empty>'),
             ),
             ElevatedButton(
               onPressed: () async {
                 await _auth.signOut();
               },
-              child: const Text('Log out!'),
+              child: Text(AppLocalizations.of(context)!.logOut),
             ),
           ],
         ),

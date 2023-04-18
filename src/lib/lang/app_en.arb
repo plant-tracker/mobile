@@ -1,0 +1,7 @@
+{
+    "hello": "Welcome, {userName}!",
+    "logOut": "Log out",
+    "signIn": "Please, sign in:",
+    "signInProvider": "Sign in with {providerName}",
+    "titleHome": "Home"
+}
