@@ -4,7 +4,7 @@ import 'package:plant_tracker/services/auth.dart';
 import 'package:social_login_buttons/social_login_buttons.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class LoginPage extends ConsumerWidget {
+class LoginView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final _auth = ref.watch(authenticationProvider);

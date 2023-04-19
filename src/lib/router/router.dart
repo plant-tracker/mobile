@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'package:plant_tracker/pages/home.dart';
-import 'package:plant_tracker/pages/login.dart';
+import 'package:plant_tracker/views/home.dart';
+import 'package:plant_tracker/views/login.dart';
 import 'package:plant_tracker/services/auth.dart';
 
 final goRouterProvider = Provider<GoRouter>((ref) {
@@ -25,12 +25,12 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         GoRoute(
           path: '/',
           name: 'home',
-          builder: (context, state) => HomePage(),
+          builder: (context, state) => HomeView(),
         ),
         GoRoute(
           path: '/login',
           name: 'login',
-          builder: (context, state) => LoginPage(),
+          builder: (context, state) => LoginView(),
         ),
       ]);
 });

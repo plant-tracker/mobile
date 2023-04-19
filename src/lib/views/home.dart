@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:plant_tracker/services/auth.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class HomePage extends ConsumerWidget {
+import 'package:plant_tracker/services/auth.dart';
+import 'package:plant_tracker/widgets/navigation.dart';
+
+class HomeView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final _auth = ref.watch(authenticationProvider);
@@ -29,6 +31,7 @@ class HomePage extends ConsumerWidget {
           ],
         ),
       ),
+      bottomNavigationBar: NavigationWidget(),
     );
   }
 }

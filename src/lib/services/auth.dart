@@ -27,6 +27,10 @@ class AuthService {
   String? getUsername() {
     return firebase.currentUser?.displayName;
   }
+
+  String? getUserID() {
+    return firebase.currentUser?.uid;
+  }
 }
 
 final authStateProvider = StateProvider<bool>(

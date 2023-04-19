@@ -3,5 +3,6 @@
     "logOut": "Log out",
     "signIn": "Please, sign in:",
     "signInProvider": "Sign in with {providerName}",
-    "titleHome": "Home"
+    "titleHome": "Home",
+    "plantDoesNotExists": "Plant does not exists."
 }

@@ -19,6 +19,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: any
+  cloud_firestore: ^4.5.2
 
 dev_dependencies:
   flutter_test:
