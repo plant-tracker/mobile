@@ -54,7 +54,7 @@ class PlantService {
         .get();
 
     if (!docSnapshot.exists) {
-      throw Exception('error.plant.doesNotExists');
+      throw Exception('plantDoesNotExists');
     }
 
     return Plant.fromFirestore(docSnapshot);
