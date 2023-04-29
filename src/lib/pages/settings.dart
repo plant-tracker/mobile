@@ -9,7 +9,7 @@ class SettingsPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final _auth = ref.watch(authenticationProvider);
-    
+
     return Scaffold(
       body: Center(
         child: ElevatedButton(

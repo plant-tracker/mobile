@@ -30,8 +30,8 @@ class LoginPage extends ConsumerWidget {
                 ? CircularProgressIndicator()
                 : SocialLoginButton(
                     buttonType: SocialLoginButtonType.google,
-                    text: AppLocalizations.of(context)!
-                        .signInProvider("Google"),
+                    text:
+                        AppLocalizations.of(context)!.signInProvider("Google"),
                     onPressed: () async {
                       ref.read(loginLoadingProvider.state).state = true;
                       await _auth.signInWithGoogle();

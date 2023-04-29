@@ -29,7 +29,8 @@ final firestorePlantsProvider = StreamProvider.autoDispose<List<Plant>>((ref) {
       );
 });
 
-final firestorePlantProvider = StreamProvider.family<Plant?, String>((ref, plantId) {
+final firestorePlantProvider =
+    StreamProvider.family<Plant?, String>((ref, plantId) {
   final auth = FirebaseAuth.instance;
   final firestore = FirebaseFirestore.instance;
 

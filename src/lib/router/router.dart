@@ -18,11 +18,10 @@ final routerProvider = Provider<GoRouter>((ref) {
     r'^/plants$': 'Plants',
     r'^/login$': 'Login'
   };
-  
+
   return GoRouter(
     initialLocation: '/',
     redirect: (context, state) {
-
       if (!_authState && state.location != '/login') {
         return '/login';
       } else if (_authState && state.location == '/login') {
@@ -33,14 +32,15 @@ final routerProvider = Provider<GoRouter>((ref) {
     },
     routes: [
       ShellRoute(
-         builder: (context, state, child) => Scaffold(
+        builder: (context, state, child) => Scaffold(
           appBar: AppBar(
             title: Consumer(
               builder: (context, ref, child) {
-                final title = routeTitleMap.entries.firstWhere(
-                  (entry) => RegExp(entry.key).hasMatch(state.location),
-                  orElse: () => MapEntry('', 'Unknown')
-                ).value;
+                final title = routeTitleMap.entries
+                    .firstWhere(
+                        (entry) => RegExp(entry.key).hasMatch(state.location),
+                        orElse: () => MapEntry('', 'Unknown'))
+                    .value;
                 return Text(title);
               },
             ),
