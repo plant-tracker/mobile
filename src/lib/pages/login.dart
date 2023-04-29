@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:plant_tracker/services/auth.dart';
 import 'package:social_login_buttons/social_login_buttons.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class LoginView extends ConsumerWidget {
+import 'package:plant_tracker/providers/auth.dart';
+
+class LoginPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final _auth = ref.watch(authenticationProvider);
+    final isLoading = ref.watch(loginLoadingProvider);
 
     return Scaffold(
         body: Padding(
@@ -24,16 +26,23 @@ class LoginView extends ConsumerWidget {
               AppLocalizations.of(context)!.signIn,
             ),
             const SizedBox(height: 10),
-            SocialLoginButton(
-              buttonType: SocialLoginButtonType.google,
-              text: AppLocalizations.of(context)!.signInProvider("Google"),
-              onPressed: () async {
-                await _auth.signInWithGoogle();
-              },
-            ),
+            isLoading
+                ? CircularProgressIndicator()
+                : SocialLoginButton(
+                    buttonType: SocialLoginButtonType.google,
+                    text: AppLocalizations.of(context)!
+                        .signInProvider("Google"),
+                    onPressed: () async {
+                      ref.read(loginLoadingProvider.state).state = true;
+                      await _auth.signInWithGoogle();
+                      ref.read(loginLoadingProvider.state).state = false;
+                    },
+                  ),
           ],
         ),
       ),
     ));
   }
 }
+
+final loginLoadingProvider = StateProvider<bool>((ref) => false);

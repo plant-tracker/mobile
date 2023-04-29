@@ -6,7 +6,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
 import 'package:plant_tracker/router/router.dart';
-import 'package:plant_tracker/services/locale.dart';
+import 'package:plant_tracker/providers/locale.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,7 +20,7 @@ class App extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     LocaleService locale = ref.watch(localeProvider);
-    GoRouter router = ref.watch(goRouterProvider);
+    GoRouter router = ref.watch(routerProvider);
 
     return MaterialApp.router(
       routerConfig: router,
