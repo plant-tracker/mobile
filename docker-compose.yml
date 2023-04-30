@@ -10,7 +10,22 @@ services:
     container_name: flutter-sdk
     working_dir: /application/src
     ports:
-      - 5037:5037
+      - ${ADB_PORT}:${ADB_PORT}
+      - ${FIREBASE_LOGIN_AUTH_PORT}:${FIREBASE_LOGIN_AUTH_PORT}
     volumes:
       - .:/application
+      - plant-tracker-android-data:/root/.android
+      - plant-tracker-flutter-sdk:/sdks
+      - plant-tracker-android-sdk:/opt/android-sdk-linux
+      - plant-tracker-pub-cache:/root/.pub-cache
     restart: unless-stopped
+
+volumes:
+  plant-tracker-android-data:
+    name: plant-tracker-android-data
+  plant-tracker-flutter-sdk:
+    name: plant-tracker-flutter-sdk
+  plant-tracker-android-sdk:
+    name: plant-tracker-android-sdk
+  plant-tracker-pub-cache:
+    name: plant-tracker-pub-cache

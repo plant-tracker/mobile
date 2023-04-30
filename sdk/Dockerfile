@@ -17,3 +17,13 @@ RUN git clone --depth 1 --branch ${FLUTTER_VERSION} https://github.com/flutter/f
 RUN yes | flutter doctor --android-licenses \
     && flutter doctor \
     && chown -R root:root ${FLUTTER_HOME}
+
+COPY . .
+
+RUN flutter precache \
+    flutter clean \
+    flutter pub get
+
+RUN dart pub global activate flutterfire_cli  
+RUN curl -sL https://firebase.tools | bash
+ENV PATH ${PATH}:${HOME}/root/.pub-cache/bin

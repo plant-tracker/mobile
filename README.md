@@ -61,3 +61,13 @@ If application fails in any other way, like missing dependencies, you might want
 ```shell
 docker-compose exec dev flutter clean
 ```
+
+## Get SHA1 or SHA-256 fingerprint
+In order for Google Auth Provider to work, you need to get an application fingerprint and add it to Firebase application.
+
+You can get it through a shortcut script:
+```shell
+./signingReport.sh
+```
+
+If it's missing, for development you can generate `debug.keystore` in `/root/.android` location inside container with [these instructions.](https://coderwall.com/p/r09hoq/android-generate-release-debug-keystores)
