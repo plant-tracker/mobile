@@ -1,32 +1,73 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:plant_tracker/models/plant.dart';
+import 'package:plant_tracker/providers/firestore.dart';
 
-class PlantForm extends StatefulWidget {
+class PlantForm extends ConsumerStatefulWidget {
   const PlantForm({Key? key}) : super(key: key);
 
   @override
-  State<PlantForm> createState() {
+  ConsumerState<PlantForm> createState() {
     return _PlantFormState();
   }
 }
 
-class _PlantFormState extends State<PlantForm> {
+class _PlantFormState extends ConsumerState<PlantForm> {
+  final _firestore = FirebaseFirestore.instance;
   bool autoValidate = true;
   bool readOnly = false;
   bool showSegmentedControl = true;
   final _formKey = GlobalKey<FormBuilderState>();
-  bool _nameHasError = false;
-  bool _speciesNameHasError = false;
-  bool _locationHasError = false;
+  bool _nameHasError = true;
+  bool _speciesNameHasError = true;
+  bool _locationHasError = true;
   bool _plantTypeHasError = false;
 
   var plantTypeOptions = PlantType.values.map((c) => c.toString().split('.').last).toList();
-
   
   void _onChanged(dynamic val) => debugPrint(val.toString());
+
+  void _addPlant(BuildContext context) async {
+    if (_formKey.currentState?.saveAndValidate() ?? false) {
+      try {
+        final formData = _formKey.currentState?.value;
+        if(formData == null){
+          throw Exception('Invalid data.');
+        } 
+
+        final plant = Plant.fromFormData(formData);
+
+        await ref.read(firestoreAddPlantProvider(plant));
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Plant added successfully'),
+            backgroundColor: Colors.green,
+          ),
+        );
+        context.go("/plants");
+      } catch (error) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error adding plant: $error'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Validation failed'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -201,6 +242,17 @@ class _PlantFormState extends State<PlantForm> {
                       ],
                       onChanged: _onChanged,
                     ),
+                    FormBuilderTextField(
+                      name: 'photo_url',
+                      initialValue: 'https://images.unsplash.com/photo-1614594895304-fe7116ac3b58',
+                      enabled: false,
+                      style: TextStyle(color: Colors.transparent),
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: '',
+                        hintStyle: TextStyle(color: Colors.transparent),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -208,19 +260,12 @@ class _PlantFormState extends State<PlantForm> {
                 children: <Widget>[
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState?.saveAndValidate() ?? false) {
-                          debugPrint(_formKey.currentState?.value.toString());
-                        } else {
-                          debugPrint(_formKey.currentState?.value.toString());
-                          debugPrint('validation failed');
-                        }
-                      },
                       child: const Text(
                         'Save',
                         style: TextStyle(color: Colors.white),
                       ),
-                    ),
+                      onPressed: () => _addPlant(context),
+                    )
                   ),
                   const SizedBox(width: 20),
                   Expanded(

@@ -33,6 +33,21 @@ class Plant {
       @required this.photoUrl,
       @required this.created);
 
+  factory Plant.fromFormData(Map<String, dynamic> formData) {
+    return Plant(
+      '',
+      formData['name'] as String,
+      formData['species_name'] as String,
+      PlantType.values.firstWhere((e) => e.toString() == 'PlantType.${formData['type']}'),
+      formData['location'] as String,
+      Humidity.values.firstWhere((e) => e.toString() == 'Humidity.${formData['humidity']}'),
+      Temperature.values.firstWhere((e) => e.toString() == 'Temperature.${formData['temperature']}'),
+      LightLevel.values.firstWhere((e) => e.toString() == 'LightLevel.${formData['light_levels']}'),
+      formData['photo_url'],
+      DateTime.now(),
+    );
+  }
+
   factory Plant.fromFirestore(DocumentSnapshot doc) {
     final data = doc.data() as Map<String, dynamic>;
     return Plant(
