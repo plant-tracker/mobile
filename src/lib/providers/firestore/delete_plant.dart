@@ -5,7 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:plant_tracker/models/plant.dart';
 
-final firestoreDeletePlantProvider = FutureProvider.autoDispose.family<void, String>((ref, plantId) async {
+final firestoreDeletePlantProvider =
+    FutureProvider.autoDispose.family<void, String>((ref, plantId) async {
   final auth = FirebaseAuth.instance;
   final firestore = FirebaseFirestore.instance;
 

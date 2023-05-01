@@ -57,18 +57,22 @@ class PlantDetailsPage extends ConsumerWidget {
                                   children: [
                                     Text(
                                       'Actions',
-                                      style: Theme.of(context).textTheme.headline6,
+                                      style:
+                                          Theme.of(context).textTheme.headline6,
                                     ),
                                     const SizedBox(height: 8),
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
                                       children: [
                                         ElevatedButton.icon(
                                           onPressed: () {
                                             showModalBottomSheet(
-                                              backgroundColor: Colors.transparent,
+                                              backgroundColor:
+                                                  Colors.transparent,
                                               context: context,
-                                              builder: (_) => DeletePlantModal(plantId: plantId),
+                                              builder: (_) => DeletePlantModal(
+                                                  plantId: plantId),
                                             );
                                           },
                                           style: ElevatedButton.styleFrom(

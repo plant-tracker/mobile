@@ -4,9 +4,11 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
 import 'package:plant_tracker/models/plant.dart';
 import 'package:plant_tracker/providers/firestore.dart';
+import 'package:plant_tracker/widgets/image_uploader.dart';
 
 class PlantForm extends ConsumerStatefulWidget {
   const PlantForm({Key? key}) : super(key: key);
@@ -23,22 +25,22 @@ class _PlantFormState extends ConsumerState<PlantForm> {
   bool readOnly = false;
   bool showSegmentedControl = true;
   final _formKey = GlobalKey<FormBuilderState>();
+  bool _photoHasError = true;
   bool _nameHasError = true;
   bool _speciesNameHasError = true;
   bool _locationHasError = true;
   bool _plantTypeHasError = false;
 
-  var plantTypeOptions = PlantType.values.map((c) => c.toString().split('.').last).toList();
-  
-  void _onChanged(dynamic val) => debugPrint(val.toString());
+  var plantTypeOptions =
+      PlantType.values.map((c) => c.toString().split('.').last).toList();
 
   void _addPlant(BuildContext context) async {
     if (_formKey.currentState?.saveAndValidate() ?? false) {
       try {
         final formData = _formKey.currentState?.value;
-        if(formData == null){
+        if (formData == null) {
           throw Exception('Invalid data.');
-        } 
+        }
 
         final plant = Plant.fromFormData(formData);
 
@@ -81,7 +83,6 @@ class _PlantFormState extends ConsumerState<PlantForm> {
                 key: _formKey,
                 onChanged: () {
                   _formKey.currentState!.save();
-                  debugPrint(_formKey.currentState!.value.toString());
                 },
                 autovalidateMode: AutovalidateMode.disabled,
                 initialValue: const {
@@ -91,6 +92,27 @@ class _PlantFormState extends ConsumerState<PlantForm> {
                 child: Column(
                   children: <Widget>[
                     const SizedBox(height: 15),
+                    FormBuilderField(
+                      autovalidateMode: AutovalidateMode.always,
+                      name: 'photo_url',
+                      builder: (FormFieldState<String?> field) {
+                        return HookBuilder(
+                          builder: (context) => ImageUploader(
+                              initialValue: "", onChanged: field.didChange),
+                        );
+                      },
+                      onChanged: (val) {
+                        setState(() {
+                          _photoHasError = !(_formKey
+                                  .currentState?.fields['photo_url']
+                                  ?.validate() ??
+                              false);
+                        });
+                      },
+                      validator: FormBuilderValidators.compose([
+                        FormBuilderValidators.required(),
+                      ]),
+                    ),
                     FormBuilderTextField(
                       autovalidateMode: AutovalidateMode.always,
                       name: 'name',
@@ -102,7 +124,8 @@ class _PlantFormState extends ConsumerState<PlantForm> {
                       ),
                       onChanged: (val) {
                         setState(() {
-                          _nameHasError = !(_formKey.currentState?.fields['name']
+                          _nameHasError = !(_formKey
+                                  .currentState?.fields['name']
                                   ?.validate() ??
                               false);
                         });
@@ -123,7 +146,8 @@ class _PlantFormState extends ConsumerState<PlantForm> {
                       ),
                       onChanged: (val) {
                         setState(() {
-                          _speciesNameHasError = !(_formKey.currentState?.fields['species_name']
+                          _speciesNameHasError = !(_formKey
+                                  .currentState?.fields['species_name']
                                   ?.validate() ??
                               false);
                         });
@@ -144,7 +168,8 @@ class _PlantFormState extends ConsumerState<PlantForm> {
                       ),
                       onChanged: (val) {
                         setState(() {
-                          _locationHasError = !(_formKey.currentState?.fields['location']
+                          _locationHasError = !(_formKey
+                                  .currentState?.fields['location']
                                   ?.validate() ??
                               false);
                         });
@@ -185,8 +210,7 @@ class _PlantFormState extends ConsumerState<PlantForm> {
                     FormBuilderChoiceChip<String>(
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: const InputDecoration(
-                          labelText:
-                              'Temperature preference:'),
+                          labelText: 'Temperature preference:'),
                       name: 'temperature',
                       initialValue: 'medium',
                       options: const [
@@ -200,13 +224,11 @@ class _PlantFormState extends ConsumerState<PlantForm> {
                           value: 'warm',
                         ),
                       ],
-                      onChanged: _onChanged,
                     ),
                     FormBuilderChoiceChip<String>(
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: const InputDecoration(
-                          labelText:
-                              'Humidity preference:'),
+                          labelText: 'Humidity preference:'),
                       name: 'humidity',
                       initialValue: 'medium',
                       options: const [
@@ -220,13 +242,11 @@ class _PlantFormState extends ConsumerState<PlantForm> {
                           value: 'high',
                         ),
                       ],
-                      onChanged: _onChanged,
                     ),
                     FormBuilderChoiceChip<String>(
                       autovalidateMode: AutovalidateMode.onUserInteraction,
-                      decoration: const InputDecoration(
-                          labelText:
-                              'Light preference:'),
+                      decoration:
+                          const InputDecoration(labelText: 'Light preference:'),
                       name: 'light_levels',
                       initialValue: 'medium',
                       options: const [
@@ -240,18 +260,6 @@ class _PlantFormState extends ConsumerState<PlantForm> {
                           value: 'high',
                         ),
                       ],
-                      onChanged: _onChanged,
-                    ),
-                    FormBuilderTextField(
-                      name: 'photo_url',
-                      initialValue: 'https://images.unsplash.com/photo-1614594895304-fe7116ac3b58',
-                      enabled: false,
-                      style: TextStyle(color: Colors.transparent),
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: '',
-                        hintStyle: TextStyle(color: Colors.transparent),
-                      ),
                     ),
                   ],
                 ),
@@ -259,14 +267,13 @@ class _PlantFormState extends ConsumerState<PlantForm> {
               Row(
                 children: <Widget>[
                   Expanded(
-                    child: ElevatedButton(
-                      child: const Text(
-                        'Save',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      onPressed: () => _addPlant(context),
-                    )
-                  ),
+                      child: ElevatedButton(
+                    child: const Text(
+                      'Save',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    onPressed: () => _addPlant(context),
+                  )),
                   const SizedBox(width: 20),
                   Expanded(
                     child: OutlinedButton(

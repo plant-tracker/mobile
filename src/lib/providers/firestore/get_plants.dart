@@ -5,7 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:plant_tracker/models/plant.dart';
 
-final firestoreGetPlantsProvider = StreamProvider.autoDispose<List<Plant>>((ref) {
+final firestoreGetPlantsProvider =
+    StreamProvider.autoDispose<List<Plant>>((ref) {
   final auth = FirebaseAuth.instance;
   final firestore = FirebaseFirestore.instance;
 

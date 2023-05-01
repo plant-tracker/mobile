@@ -38,11 +38,15 @@ class Plant {
       '',
       formData['name'] as String,
       formData['species_name'] as String,
-      PlantType.values.firstWhere((e) => e.toString() == 'PlantType.${formData['type']}'),
+      PlantType.values
+          .firstWhere((e) => e.toString() == 'PlantType.${formData['type']}'),
       formData['location'] as String,
-      Humidity.values.firstWhere((e) => e.toString() == 'Humidity.${formData['humidity']}'),
-      Temperature.values.firstWhere((e) => e.toString() == 'Temperature.${formData['temperature']}'),
-      LightLevel.values.firstWhere((e) => e.toString() == 'LightLevel.${formData['light_levels']}'),
+      Humidity.values.firstWhere(
+          (e) => e.toString() == 'Humidity.${formData['humidity']}'),
+      Temperature.values.firstWhere(
+          (e) => e.toString() == 'Temperature.${formData['temperature']}'),
+      LightLevel.values.firstWhere(
+          (e) => e.toString() == 'LightLevel.${formData['light_levels']}'),
       formData['photo_url'],
       DateTime.now(),
     );
