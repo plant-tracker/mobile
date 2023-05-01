@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "875423458247",
+    "project_id": "plant-tracker-c90cb",
+    "storage_bucket": "plant-tracker-c90cb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:875423458247:android:fc755cb20c26661ff52fe2",
+        "android_client_info": {
+          "package_name": "com.example.plant_tracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "875423458247-1gu3t3q8tgs4hjtfnr0r2o2lvu5e39m8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBO0m00X_Uy8fMyi2OWtGPEkJGnal6okMs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "875423458247-1gu3t3q8tgs4hjtfnr0r2o2lvu5e39m8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
