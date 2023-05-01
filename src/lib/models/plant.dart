@@ -3,15 +3,17 @@ import 'package:flutter/foundation.dart';
 
 enum Humidity { low, medium, high }
 
-enum Temperature { cold, moderate, warm }
+enum Temperature { cold, medium, warm }
 
 enum LightLevel { low, medium, high }
+
+enum PlantType { bonsai, succulent, cactus, fern, other }
 
 class Plant {
   final String id;
   final String name;
   final String speciesName;
-  final String type;
+  final PlantType type;
   final String location;
   final Humidity humidity;
   final Temperature temperature;
@@ -37,7 +39,8 @@ class Plant {
       doc.id,
       data['name'],
       data['species_name'],
-      data['type'],
+      PlantType.values
+          .firstWhere((e) => e.toString() == 'PlantType.${data['type']}'),
       data['location'],
       Humidity.values
           .firstWhere((e) => e.toString() == 'Humidity.${data['humidity']}'),
@@ -54,7 +57,7 @@ class Plant {
     return {
       'name': name,
       'species_name': speciesName,
-      'type': type,
+      'type': describeEnum(type),
       'location': location,
       'humidity': describeEnum(humidity),
       'temperature': describeEnum(temperature),
