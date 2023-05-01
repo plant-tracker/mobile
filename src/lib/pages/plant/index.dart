@@ -4,16 +4,19 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+export './details.dart';
+export './add.dart';
+
 import 'package:plant_tracker/models/plant.dart';
 import 'package:plant_tracker/providers/firestore.dart';
-import 'package:plant_tracker/widgets/plant_card.dart';
+import 'package:plant_tracker/widgets/plant/card.dart';
 
 class PlantsPage extends ConsumerWidget {
   const PlantsPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final plantsAsyncValue = ref.watch(firestorePlantsProvider);
+    final plantsAsyncValue = ref.watch(firestoreGetPlantsProvider);
 
     return Scaffold(
       body: plantsAsyncValue.when(

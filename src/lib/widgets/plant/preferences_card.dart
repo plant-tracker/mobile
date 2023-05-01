@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:plant_tracker/models/plant.dart';
 
-class PreferencesCard extends StatelessWidget {
-  const PreferencesCard({
+class PlantPreferencesCard extends StatelessWidget {
+  const PlantPreferencesCard({
     Key? key,
     required this.humidity,
     required this.lightLevels,
