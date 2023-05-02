@@ -39,7 +39,7 @@ final routerProvider = Provider<GoRouter>((ref) {
                 final title = routeTitleMap.entries
                     .firstWhere(
                         (entry) => RegExp(entry.key).hasMatch(state.location),
-                        orElse: () => MapEntry('', 'Unknown'))
+                        orElse: () => const MapEntry('', 'Unknown'))
                     .value;
                 return Text(title);
               },
