@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -20,12 +19,10 @@ class PlantForm extends ConsumerStatefulWidget {
 }
 
 class _PlantFormState extends ConsumerState<PlantForm> {
-  final _firestore = FirebaseFirestore.instance;
   bool autoValidate = true;
   bool readOnly = false;
   bool showSegmentedControl = true;
   final _formKey = GlobalKey<FormBuilderState>();
-  bool _photoHasError = true;
   bool _nameHasError = true;
   bool _speciesNameHasError = true;
   bool _locationHasError = true;
@@ -44,10 +41,10 @@ class _PlantFormState extends ConsumerState<PlantForm> {
 
         final plant = Plant.fromFormData(formData);
 
-        await ref.read(firestoreAddPlantProvider(plant));
+        ref.read(firestoreAddPlantProvider(plant));
 
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
+          const SnackBar(
             content: Text('Plant added successfully'),
             backgroundColor: Colors.green,
           ),
@@ -63,7 +60,7 @@ class _PlantFormState extends ConsumerState<PlantForm> {
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Validation failed'),
           backgroundColor: Colors.red,
         ),
@@ -100,14 +97,6 @@ class _PlantFormState extends ConsumerState<PlantForm> {
                           builder: (context) => ImageUploader(
                               initialValue: "", onChanged: field.didChange),
                         );
-                      },
-                      onChanged: (val) {
-                        setState(() {
-                          _photoHasError = !(_formKey
-                                  .currentState?.fields['photo_url']
-                                  ?.validate() ??
-                              false);
-                        });
                       },
                       validator: FormBuilderValidators.compose([
                         FormBuilderValidators.required(),

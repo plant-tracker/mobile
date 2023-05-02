@@ -22,16 +22,16 @@ class Plant {
   final DateTime created;
 
   Plant(
-      @required this.id,
-      @required this.name,
-      @required this.speciesName,
-      @required this.type,
-      @required this.location,
-      @required this.humidity,
-      @required this.temperature,
-      @required this.lightLevels,
-      @required this.photoUrl,
-      @required this.created);
+      this.id,
+      this.name,
+      this.speciesName,
+      this.type,
+      this.location,
+      this.humidity,
+      this.temperature,
+      this.lightLevels,
+      this.photoUrl,
+      this.created);
 
   factory Plant.fromFormData(Map<String, dynamic> formData) {
     return Plant(

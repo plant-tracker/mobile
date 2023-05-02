@@ -16,7 +16,7 @@ class DeletePlantModal extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return AlertDialog(
       title: const Text('Delete Plant?'),
-      content: Text('Are you sure you want to delete your plant permanently?'),
+      content: const Text('Are you sure you want to delete your plant permanently?'),
       actions: <Widget>[
         TextButton(
           onPressed: () {
@@ -27,7 +27,7 @@ class DeletePlantModal extends ConsumerWidget {
         TextButton(
           onPressed: () async {
             try {
-              await ref.read(firestoreDeletePlantProvider(plantId));
+              ref.read(firestoreDeletePlantProvider(plantId));
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
                   content: Text('Plant deleted successfully'),

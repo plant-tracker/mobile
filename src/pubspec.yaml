@@ -28,6 +28,8 @@ dependencies:
   flutter_hooks: ^0.18.6
   uuid: ^3.0.7
   hooks_riverpod: ^2.3.6
+  image_picker: ^0.8.7+4
+  path: ^1.8.2
 
 dev_dependencies:
   flutter_test:

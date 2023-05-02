@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -42,9 +41,9 @@ final authenticationProvider = Provider<AuthService>((ref) {
 
   authService.firebase.authStateChanges().listen((User? user) {
     if (user == null) {
-      ref.read(authStateProvider.state).state = false;
+      ref.read(authStateProvider.notifier).state = false;
     } else {
-      ref.read(authStateProvider.state).state = true;
+      ref.read(authStateProvider.notifier).state = true;
     }
   });
 

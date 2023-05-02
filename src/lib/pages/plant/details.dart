@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/foundation.dart';
-import 'package:go_router/go_router.dart';
 
-import 'package:plant_tracker/models/plant.dart';
 import 'package:plant_tracker/providers/firestore.dart';
 import 'package:plant_tracker/widgets/plant/preferences_card.dart';
 import 'package:plant_tracker/widgets/plant/card.dart';
 import 'package:plant_tracker/widgets/plant/delete.dart';
 
 class PlantDetailsPage extends ConsumerWidget {
-  const PlantDetailsPage({required this.plantId});
+  const PlantDetailsPage({super.key, required this.plantId});
 
   final String plantId;
 
@@ -38,7 +36,7 @@ class PlantDetailsPage extends ConsumerWidget {
                               const SizedBox(height: 8),
                               Row(
                                 children: [
-                                  Icon(Icons.calendar_today, size: 24),
+                                  const Icon(Icons.calendar_today, size: 24),
                                   const SizedBox(width: 8),
                                   Text('Creation Date: ${plant.created}'),
                                 ],
@@ -58,7 +56,7 @@ class PlantDetailsPage extends ConsumerWidget {
                                     Text(
                                       'Actions',
                                       style:
-                                          Theme.of(context).textTheme.headline6,
+                                          Theme.of(context).textTheme.titleLarge,
                                     ),
                                     const SizedBox(height: 8),
                                     Row(
@@ -78,8 +76,8 @@ class PlantDetailsPage extends ConsumerWidget {
                                           style: ElevatedButton.styleFrom(
                                             backgroundColor: Colors.red,
                                           ),
-                                          icon: Icon(Icons.delete),
-                                          label: Text('Delete'),
+                                          icon: const Icon(Icons.delete),
+                                          label: const Text('Delete'),
                                         ),
                                       ],
                                     ),

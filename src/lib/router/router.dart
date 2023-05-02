@@ -7,7 +7,7 @@ import 'package:plant_tracker/providers/auth.dart';
 import 'package:plant_tracker/widgets/navigation_bar.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
-  final _authState = ref.watch(authStateProvider);
+  final authState = ref.watch(authStateProvider);
 
   final routeTitleMap = {
     r'^/$': 'Home',
@@ -22,9 +22,9 @@ final routerProvider = Provider<GoRouter>((ref) {
   return GoRouter(
     initialLocation: '/',
     redirect: (context, state) {
-      if (!_authState && state.location != '/login') {
+      if (!authState && state.location != '/login') {
         return '/login';
-      } else if (_authState && state.location == '/login') {
+      } else if (authState && state.location == '/login') {
         return '/';
       }
 
@@ -46,31 +46,31 @@ final routerProvider = Provider<GoRouter>((ref) {
             ),
           ),
           body: child,
-          bottomNavigationBar: NavigationBarMenu(),
+          bottomNavigationBar: const NavigationBarMenu(),
         ),
         routes: [
           GoRoute(
             path: '/',
             builder: (context, state) {
-              return HomePage();
+              return const HomePage();
             },
           ),
           GoRoute(
             path: '/settings',
             builder: (context, state) {
-              return SettingsPage();
+              return const SettingsPage();
             },
           ),
           GoRoute(
             path: '/plants',
             builder: (context, state) {
-              return PlantsPage();
+              return const PlantsPage();
             },
           ),
           GoRoute(
             path: '/plants/add',
             builder: (context, state) {
-              return PlantAddPage();
+              return const PlantAddPage();
             },
           ),
           GoRoute(
@@ -84,7 +84,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: '/login',
-        builder: (context, state) => LoginPage(),
+        builder: (context, state) => const LoginPage(),
       ),
     ],
   );
