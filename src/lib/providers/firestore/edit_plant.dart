@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:plant_tracker/models/plant.dart';
 
-final firestoreAddPlantProvider =
-    FutureProvider.autoDispose.family<String, Plant>((ref, plant) async {
+final firestoreEditPlantProvider =
+    FutureProvider.autoDispose.family<void, Plant>((ref, plant) async {
   final auth = FirebaseAuth.instance;
   final firestore = FirebaseFirestore.instance;
 
@@ -18,12 +18,11 @@ final firestoreAddPlantProvider =
   final plantCollection =
       firestore.collection('users').doc(user.uid).collection('plants');
 
-  final newPlantDoc = plantCollection.doc();
-
-  try {
-    await newPlantDoc.set(plant.toMap());
-    return newPlantDoc.id;
-  } catch (e) {
-    rethrow;
-  }
+  plantCollection
+      .doc(plant.id)
+      .update(plant.toMap())
+      .then((_) => {})
+      .catchError((error) {
+    throw error;
+  });
 });

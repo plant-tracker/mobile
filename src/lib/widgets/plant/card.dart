@@ -29,10 +29,10 @@ class PlantCard extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
                   child: Hero(
-                    tag: plant.photoUrl!,
+                    tag: plant.photoUrl,
                     child: FadeInImage.assetNetwork(
                       placeholder: 'assets/images/plant_placeholder.png',
-                      image: plant.photoUrl!,
+                      image: plant.photoUrl,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -45,16 +45,16 @@ class PlantCard extends StatelessWidget {
                   children: [
                     Text(
                       plant.name,
-                      style: Theme.of(context).textTheme.headline6,
+                      style: Theme.of(context).textTheme.titleLarge,
                     ),
                     Text(
                       plant.speciesName,
-                      style: Theme.of(context).textTheme.subtitle1,
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                     const SizedBox(height: 8),
                     Row(
                       children: [
-                        Icon(Icons.location_on, size: 16),
+                        const Icon(Icons.location_on, size: 16),
                         Text(plant.location),
                       ],
                     ),

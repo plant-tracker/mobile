@@ -47,7 +47,7 @@ class ImageProvider extends StateNotifier<File?> {
 
     if (user == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text("User not logged in."),
           backgroundColor: Colors.red,
         ),
@@ -59,7 +59,7 @@ class ImageProvider extends StateNotifier<File?> {
 
     final compressedFile = await FlutterImageCompress.compressAndGetFile(
       state!.path,
-      state!.parent.path + '/compressed_' + uuid.v4() + fileName,
+      '${state!.parent.path}/compressed_${uuid.v4()}$fileName',
       quality: 50,
     );
 
@@ -70,10 +70,10 @@ class ImageProvider extends StateNotifier<File?> {
         .child("users/${user.uid}/$compressedFileName");
 
     try {
-      final uploadTask = storageRef.putFile(compressedFile!);
+      final uploadTask = storageRef.putFile(compressedFile);
       await uploadTask.whenComplete(() {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
+          const SnackBar(
             content: Text("Image uploaded successfully."),
             backgroundColor: Colors.green,
           ),

@@ -6,9 +6,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:plant_tracker/providers/auth.dart';
 
 class LoginPage extends ConsumerWidget {
+  const LoginPage({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final _auth = ref.watch(authenticationProvider);
+    final auth = ref.watch(authenticationProvider);
     final isLoading = ref.watch(loginLoadingProvider);
 
     return Scaffold(
@@ -27,15 +29,15 @@ class LoginPage extends ConsumerWidget {
             ),
             const SizedBox(height: 10),
             isLoading
-                ? CircularProgressIndicator()
+                ? const CircularProgressIndicator()
                 : SocialLoginButton(
                     buttonType: SocialLoginButtonType.google,
                     text:
                         AppLocalizations.of(context)!.signInProvider("Google"),
                     onPressed: () async {
-                      ref.read(loginLoadingProvider.state).state = true;
-                      await _auth.signInWithGoogle();
-                      ref.read(loginLoadingProvider.state).state = false;
+                      ref.read(loginLoadingProvider.notifier).state = true;
+                      await auth.signInWithGoogle();
+                      ref.read(loginLoadingProvider.notifier).state = false;
                     },
                   ),
           ],

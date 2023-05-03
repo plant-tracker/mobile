@@ -8,14 +8,14 @@ class SettingsPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final _auth = ref.watch(authenticationProvider);
+    final auth = ref.watch(authenticationProvider);
 
     return Scaffold(
       body: Center(
         child: ElevatedButton(
-          child: Text('Sign out'),
+          child: const Text('Sign out'),
           onPressed: () async {
-            await _auth.signOut();
+            await auth.signOut();
           },
         ),
       ),

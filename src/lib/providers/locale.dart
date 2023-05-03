@@ -5,7 +5,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LocaleService {
   final List<Locale> supportedLocales = [
-    Locale('en'),
+    const Locale('en'),
   ];
 
   final Iterable<LocalizationsDelegate<dynamic>>? delegates = [

@@ -1,13 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 export './details.dart';
 export './add.dart';
+export './edit.dart';
 
-import 'package:plant_tracker/models/plant.dart';
 import 'package:plant_tracker/providers/firestore.dart';
 import 'package:plant_tracker/widgets/plant/card.dart';
 
@@ -48,7 +46,7 @@ class PlantsPage extends ConsumerWidget {
         loading: () => const Center(
           child: CircularProgressIndicator(),
         ),
-        error: (error, stackTrace) => Center(
+        error: (error, stackTrace) => const Center(
           child: Text('Error loading plants'),
         ),
       ),

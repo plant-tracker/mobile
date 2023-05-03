@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:plant_tracker/providers/auth.dart';
-
 final navbarProvider = StateProvider<int>((_) => 0);
 
 class NavigationBarMenu extends ConsumerWidget {
@@ -11,10 +9,10 @@ class NavigationBarMenu extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final _navbarIndex = ref.watch(navbarProvider.notifier).state;
+    final navbarIndex = ref.watch(navbarProvider.notifier).state;
 
     return BottomNavigationBar(
-      currentIndex: _navbarIndex,
+      currentIndex: navbarIndex,
       onTap: (int index) {
         ref.read(navbarProvider.notifier).state = index;
         switch (index) {
@@ -29,7 +27,7 @@ class NavigationBarMenu extends ConsumerWidget {
             break;
         }
       },
-      items: [
+      items: const [
         BottomNavigationBarItem(
           icon: Icon(Icons.home),
           label: 'Home',

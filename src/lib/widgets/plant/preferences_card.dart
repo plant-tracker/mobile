@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:plant_tracker/models/plant.dart';
 
 class PlantPreferencesCard extends StatelessWidget {
   const PlantPreferencesCard({
@@ -25,7 +24,7 @@ class PlantPreferencesCard extends StatelessWidget {
           children: [
             Text(
               'Preferences',
-              style: Theme.of(context).textTheme.headline6,
+              style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 8),
             Row(
@@ -74,7 +73,7 @@ class PlantPreferencesCard extends StatelessWidget {
           const SizedBox(width: 4),
           Text(
             value,
-            style: Theme.of(context).textTheme.subtitle1!.copyWith(
+            style: Theme.of(context).textTheme.titleMedium!.copyWith(
                   color: Colors.black,
                 ),
           ),
