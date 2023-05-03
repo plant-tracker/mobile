@@ -25,6 +25,8 @@ class App extends ConsumerWidget {
       routerConfig: router,
       theme: ThemeData(
         primarySwatch: Colors.green,
+        primaryColor: Colors.tealAccent,
+        brightness: Brightness.dark,
       ),
       localizationsDelegates: locale.delegates,
       supportedLocales: locale.supportedLocales,
