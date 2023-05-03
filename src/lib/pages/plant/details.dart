@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/foundation.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:plant_tracker/providers/firestore.dart';
 import 'package:plant_tracker/widgets/plant/preferences_card.dart';
@@ -55,14 +56,25 @@ class PlantDetailsPage extends ConsumerWidget {
                                   children: [
                                     Text(
                                       'Actions',
-                                      style:
-                                          Theme.of(context).textTheme.titleLarge,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleLarge,
                                     ),
                                     const SizedBox(height: 8),
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceAround,
                                       children: [
+                                        ElevatedButton.icon(
+                                          onPressed: () {
+                                            context.go("/plants/$plantId/edit");
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.blue,
+                                          ),
+                                          icon: const Icon(Icons.edit),
+                                          label: const Text('Edit'),
+                                        ),
                                         ElevatedButton.icon(
                                           onPressed: () {
                                             showModalBottomSheet(

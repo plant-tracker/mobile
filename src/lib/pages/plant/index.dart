@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 export './details.dart';
 export './add.dart';
+export './edit.dart';
 
 import 'package:plant_tracker/providers/firestore.dart';
 import 'package:plant_tracker/widgets/plant/card.dart';

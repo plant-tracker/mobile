@@ -80,6 +80,13 @@ final routerProvider = Provider<GoRouter>((ref) {
               return PlantDetailsPage(plantId: plantId!);
             },
           ),
+          GoRoute(
+            path: '/plants/:plantId/edit',
+            builder: (context, state) {
+              final plantId = state.params['plantId'];
+              return PlantEditPage(plantId: plantId!);
+            },
+          ),
         ],
       ),
       GoRoute(

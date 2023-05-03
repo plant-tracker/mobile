@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -14,8 +13,15 @@ class ImageUploader extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final imageState = ref.watch(imageProvider.notifier).state;
     final photoUrlController = useTextEditingController(text: initialValue);
+
+    useEffect(() {
+      Future.delayed(Duration.zero, () {
+        photoUrlController.text = initialValue ?? "";
+        onChanged(initialValue ?? "");
+      });
+      return null;
+    }, []);
 
     return Column(
       children: [
@@ -31,7 +37,7 @@ class ImageUploader extends HookConsumerWidget {
           child: SizedBox(
             width: 200,
             height: 200,
-            child: imageState != null && photoUrlController.text.isNotEmpty
+            child: photoUrlController.text.isNotEmpty
                 ? ClipRRect(
                     borderRadius: BorderRadius.circular(8),
                     child: FadeInImage.assetNetwork(

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,7 +12,9 @@ import 'package:plant_tracker/providers/firestore.dart';
 import 'package:plant_tracker/widgets/image_uploader.dart';
 
 class PlantForm extends ConsumerStatefulWidget {
-  const PlantForm({Key? key}) : super(key: key);
+  final Plant? editedPlant;
+
+  const PlantForm({Key? key, this.editedPlant}) : super(key: key);
 
   @override
   ConsumerState<PlantForm> createState() {
@@ -68,8 +72,50 @@ class _PlantFormState extends ConsumerState<PlantForm> {
     }
   }
 
+  void _editPlant(BuildContext context) async {
+    if (_formKey.currentState?.saveAndValidate() ?? false) {
+      try {
+        final formData = _formKey.currentState?.value;
+        if (formData == null) {
+          throw Exception('Invalid data.');
+        }
+
+        final plant = Plant.fromFormData(formData);
+        ref.read(firestoreEditPlantProvider(plant));
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Plant edited successfully'),
+            backgroundColor: Colors.green,
+          ),
+        );
+
+        context.go("/plants");
+      } catch (error) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error editing plant: $error'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Validation failed'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (widget.editedPlant != null) {
+      _nameHasError = false;
+      _speciesNameHasError = false;
+      _locationHasError = false;
+    }
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(10),
@@ -82,9 +128,13 @@ class _PlantFormState extends ConsumerState<PlantForm> {
                   _formKey.currentState!.save();
                 },
                 autovalidateMode: AutovalidateMode.disabled,
-                initialValue: const {
-                  'type': 'fern',
-                },
+                initialValue: widget.editedPlant?.toFormData() ??
+                    {
+                      'id': "",
+                      'type': 'fern',
+                      'photo_url': "",
+                      'created': "",
+                    },
                 skipDisabled: true,
                 child: Column(
                   children: <Widget>[
@@ -95,7 +145,8 @@ class _PlantFormState extends ConsumerState<PlantForm> {
                       builder: (FormFieldState<String?> field) {
                         return HookBuilder(
                           builder: (context) => ImageUploader(
-                              initialValue: "", onChanged: field.didChange),
+                              initialValue: widget.editedPlant?.photoUrl ?? "",
+                              onChanged: field.didChange),
                         );
                       },
                       validator: FormBuilderValidators.compose([
@@ -201,7 +252,9 @@ class _PlantFormState extends ConsumerState<PlantForm> {
                       decoration: const InputDecoration(
                           labelText: 'Temperature preference:'),
                       name: 'temperature',
-                      initialValue: 'medium',
+                      initialValue: widget.editedPlant?.temperature != null
+                          ? describeEnum(widget.editedPlant!.temperature)
+                          : 'medium',
                       options: const [
                         FormBuilderChipOption(
                           value: 'cold',
@@ -219,7 +272,9 @@ class _PlantFormState extends ConsumerState<PlantForm> {
                       decoration: const InputDecoration(
                           labelText: 'Humidity preference:'),
                       name: 'humidity',
-                      initialValue: 'medium',
+                      initialValue: widget.editedPlant?.humidity != null
+                          ? describeEnum(widget.editedPlant!.humidity)
+                          : 'medium',
                       options: const [
                         FormBuilderChipOption(
                           value: 'low',
@@ -237,7 +292,9 @@ class _PlantFormState extends ConsumerState<PlantForm> {
                       decoration:
                           const InputDecoration(labelText: 'Light preference:'),
                       name: 'light_levels',
-                      initialValue: 'medium',
+                      initialValue: widget.editedPlant?.lightLevels != null
+                          ? describeEnum(widget.editedPlant!.lightLevels)
+                          : 'medium',
                       options: const [
                         FormBuilderChipOption(
                           value: 'low',
@@ -250,6 +307,18 @@ class _PlantFormState extends ConsumerState<PlantForm> {
                         ),
                       ],
                     ),
+                    FormBuilderField(
+                      name: 'id',
+                      builder: (FormFieldState<dynamic> field) {
+                        return const SizedBox.shrink();
+                      },
+                    ),
+                    FormBuilderField(
+                      name: 'created',
+                      builder: (FormFieldState<dynamic> field) {
+                        return const SizedBox.shrink();
+                      },
+                    ),
                   ],
                 ),
               ),
@@ -261,7 +330,13 @@ class _PlantFormState extends ConsumerState<PlantForm> {
                       'Save',
                       style: TextStyle(color: Colors.white),
                     ),
-                    onPressed: () => _addPlant(context),
+                    onPressed: () {
+                      if (widget.editedPlant == null) {
+                        _addPlant(context);
+                      } else {
+                        _editPlant(context);
+                      }
+                    },
                   )),
                   const SizedBox(width: 20),
                   Expanded(

@@ -35,21 +35,37 @@ class Plant {
 
   factory Plant.fromFormData(Map<String, dynamic> formData) {
     return Plant(
-      '',
+      formData['id'] as String,
       formData['name'] as String,
       formData['species_name'] as String,
-      PlantType.values
-          .firstWhere((e) => e.toString() == 'PlantType.${formData['type']}'),
+      PlantType.values.firstWhere((e) => describeEnum(e) == formData['type']),
       formData['location'] as String,
-      Humidity.values.firstWhere(
-          (e) => e.toString() == 'Humidity.${formData['humidity']}'),
-      Temperature.values.firstWhere(
-          (e) => e.toString() == 'Temperature.${formData['temperature']}'),
-      LightLevel.values.firstWhere(
-          (e) => e.toString() == 'LightLevel.${formData['light_levels']}'),
-      formData['photo_url'],
-      DateTime.now(),
+      Humidity.values
+          .firstWhere((e) => describeEnum(e) == formData['humidity']),
+      Temperature.values
+          .firstWhere((e) => describeEnum(e) == formData['temperature']),
+      LightLevel.values
+          .firstWhere((e) => describeEnum(e) == formData['light_levels']),
+      formData['photo_url'] as String,
+      (formData['created'] as String).isNotEmpty
+          ? DateTime.parse(formData['created'] as String)
+          : DateTime.now(),
     );
+  }
+
+  Map<String, dynamic> toFormData() {
+    return {
+      'id': id,
+      'name': name,
+      'species_name': speciesName,
+      'type': describeEnum(type),
+      'location': location,
+      'humidity': describeEnum(humidity),
+      'temperature': describeEnum(temperature),
+      'light_levels': describeEnum(lightLevels),
+      'photo_url': photoUrl,
+      'created': created.toIso8601String(),
+    };
   }
 
   factory Plant.fromFirestore(DocumentSnapshot doc) {

@@ -16,7 +16,8 @@ class DeletePlantModal extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return AlertDialog(
       title: const Text('Delete Plant?'),
-      content: const Text('Are you sure you want to delete your plant permanently?'),
+      content:
+          const Text('Are you sure you want to delete your plant permanently?'),
       actions: <Widget>[
         TextButton(
           onPressed: () {
