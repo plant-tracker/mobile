@@ -1,6 +1,7 @@
+import 'dart:io';
 import 'dart:convert';
+import 'package:path/path.dart' as path;
 import 'package:flutter_test/flutter_test.dart';
-
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -28,7 +29,12 @@ void main() {
   String? firestoreRules;
 
   setUpAll(() async {
-    firestoreRules = await rootBundle.loadString('/application/src/firebase-config/firestore.rules');
+    final currentDir = Directory.current;
+    final configDir = Directory(path.join(currentDir.path, 'firebase-config'));
+    final file = File(path.join(configDir.path, 'firestore.rules'));
+
+    firestoreRules = await file.readAsString();
+
     auth.createUserWithEmailAndPassword(
       email: "mock@example.com",
       password: "Mock-1234!test"
