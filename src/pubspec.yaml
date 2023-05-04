@@ -30,6 +30,8 @@ dependencies:
   hooks_riverpod: ^2.3.6
   image_picker: ^0.8.7+4
   path: ^1.8.2
+  fake_cloud_firestore: ^2.4.1+1
+  firebase_auth_mocks: ^0.11.0
 
 dev_dependencies:
   flutter_test:

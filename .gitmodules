@@ -1,3 +1,6 @@
 [submodule "src/assets"]
 	path = src/assets
 	url = https://github.com/plant-tracker/assets.git
+[submodule "src/firebase-config"]
+	path = src/firebase-config
+	url = https://github.com/plant-tracker/firebase-config.git
