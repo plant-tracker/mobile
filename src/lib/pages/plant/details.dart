@@ -48,7 +48,6 @@ class PlantDetailsPage extends ConsumerWidget {
                                 lightLevels: describeEnum(plant.lightLevels),
                                 temperature: describeEnum(plant.temperature),
                               ),
-                              const SizedBox(height: 16),
                               Padding(
                                 padding: const EdgeInsets.all(16),
                                 child: Column(
@@ -62,34 +61,38 @@ class PlantDetailsPage extends ConsumerWidget {
                                     ),
                                     const SizedBox(height: 8),
                                     Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
+                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                                       children: [
-                                        ElevatedButton.icon(
-                                          onPressed: () {
-                                            context.go("/plants/$plantId/edit");
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                            backgroundColor: Colors.blue,
+                                        Expanded(
+                                          child: ElevatedButton.icon(
+                                            onPressed: () {
+                                              context.go("/plants/$plantId/edit");
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor: Colors.blue,
+                                            ),
+                                            icon: const Icon(Icons.edit),
+                                            label: const Text('Edit'),
                                           ),
-                                          icon: const Icon(Icons.edit),
-                                          label: const Text('Edit'),
                                         ),
-                                        ElevatedButton.icon(
-                                          onPressed: () {
-                                            showModalBottomSheet(
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                              context: context,
-                                              builder: (_) => DeletePlantModal(
-                                                  plantId: plantId),
-                                            );
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                            backgroundColor: Colors.red,
+                                        SizedBox(width: 16),
+                                        Expanded(
+                                          child: ElevatedButton.icon(
+                                            onPressed: () {
+                                              showModalBottomSheet(
+                                                backgroundColor: Colors.transparent,
+                                                context: context,
+                                                builder: (_) => DeletePlantModal(
+                                                  plantId: plantId,
+                                                ),
+                                              );
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor: Colors.red,
+                                            ),
+                                            icon: const Icon(Icons.delete),
+                                            label: const Text('Delete'),
                                           ),
-                                          icon: const Icon(Icons.delete),
-                                          label: const Text('Delete'),
                                         ),
                                       ],
                                     ),
