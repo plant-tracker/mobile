@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:plant_tracker/pages/pages.dart';
 import 'package:plant_tracker/providers/auth.dart';
 import 'package:plant_tracker/widgets/navigation_bar.dart';
+import 'package:plant_tracker/widgets/burger_menu.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
   final authState = ref.watch(authStateProvider);
@@ -45,6 +46,7 @@ final routerProvider = Provider<GoRouter>((ref) {
               },
             ),
           ),
+          drawer: BurgerMenu(),
           body: child,
           bottomNavigationBar: const NavigationBarMenu(),
         ),
