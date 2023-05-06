@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class CountWidget extends StatelessWidget {
+class TotalProgressCard extends StatelessWidget {
   final int count;
   final int maxCount;
 
-  const CountWidget({
+  const TotalProgressCard({
     required this.count,
     required this.maxCount,
   });

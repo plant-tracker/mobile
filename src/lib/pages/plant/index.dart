@@ -8,7 +8,7 @@ export './edit.dart';
 
 import 'package:plant_tracker/providers/firestore.dart';
 import 'package:plant_tracker/widgets/plant/card.dart';
-import 'package:plant_tracker/widgets/stat_count.dart';
+import 'package:plant_tracker/widgets/total_progress.dart';
 
 class PlantsPage extends ConsumerWidget {
   const PlantsPage({Key? key}) : super(key: key);
@@ -28,22 +28,35 @@ class PlantsPage extends ConsumerWidget {
                       child: Text('You have no plants.'),
                     );
                   }
-                  return ListView.builder(
-                      padding: const EdgeInsets.only(bottom: 16),
-                      itemCount: plants.length,
-                      itemBuilder: (context, index) {
-                        final plant = plants[index];
-                        return Padding(
-                          padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
-                          child: PlantCard(
-                            plant: plant,
-                            onTap: () {
-                              context.go('/plants/${plant.id}');
-                            },
-                          ),
-                        );
-                      },
-                    );
+                  return Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
+                        child: TotalProgressCard(
+                          count: plants.length,
+                          maxCount: 50,
+                        ),
+                      ),
+                      Expanded(
+                        child: ListView.builder(
+                          padding: const EdgeInsets.only(bottom: 16),
+                          itemCount: plants.length,
+                          itemBuilder: (context, index) {
+                            final plant = plants[index];
+                            return Padding(
+                              padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
+                              child: PlantCard(
+                                plant: plant,
+                                onTap: () {
+                                  context.go('/plants/${plant.id}');
+                                },
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  );
                 },
                 loading: () => const Center(
                   child: CircularProgressIndicator(),
