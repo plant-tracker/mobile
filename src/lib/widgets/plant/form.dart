@@ -116,10 +116,8 @@ class _PlantFormState extends ConsumerState<PlantForm> {
       _locationHasError = false;
     }
 
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(10),
-        child: SingleChildScrollView(
+    return SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
           child: Column(
             children: <Widget>[
               FormBuilder(
@@ -355,8 +353,6 @@ class _PlantFormState extends ConsumerState<PlantForm> {
               ),
             ],
           ),
-        ),
-      ),
-    );
+        );
   }
 }

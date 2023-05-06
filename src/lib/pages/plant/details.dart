@@ -18,8 +18,7 @@ class PlantDetailsPage extends ConsumerWidget {
     final plantAsyncValue = ref.watch(firestoreGetPlantProvider(plantId));
     return plantAsyncValue.when(
       data: (plant) => plant != null
-          ? Scaffold(
-              body: CustomScrollView(
+          ? CustomScrollView(
                 slivers: [
                   SliverList(
                     delegate: SliverChildListDelegate(
@@ -49,7 +48,7 @@ class PlantDetailsPage extends ConsumerWidget {
                                 temperature: describeEnum(plant.temperature),
                               ),
                               Padding(
-                                padding: const EdgeInsets.all(16),
+                                padding: const EdgeInsets.only(top: 16),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -107,8 +106,7 @@ class PlantDetailsPage extends ConsumerWidget {
                     ),
                   ),
                 ],
-              ),
-            )
+              )
           : const SizedBox.shrink(),
       loading: () => const Center(child: CircularProgressIndicator()),
       error: (error, stackTrace) => Center(child: Text('Error: $error')),

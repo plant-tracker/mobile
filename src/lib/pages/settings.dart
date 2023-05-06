@@ -10,15 +10,13 @@ class SettingsPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final auth = ref.watch(authenticationProvider);
 
-    return Scaffold(
-      body: Center(
+    return Center(
         child: ElevatedButton(
           child: const Text('Sign out'),
           onPressed: () async {
             await auth.signOut();
           },
         ),
-      ),
-    );
+      );
   }
 }

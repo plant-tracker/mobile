@@ -13,14 +13,16 @@ final firestoreDeletePlantProvider =
     throw Exception('User not logged in');
   }
 
-  final plantDoc = firestore
-      .collection('users')
-      .doc(user.uid)
-      .collection('plants')
-      .doc(plantId);
+  final userDoc = firestore.collection('users').doc(user.uid);
+  final plantDoc = userDoc.collection('plants').doc(plantId);
+
+  final batch = firestore.batch();
+      
+  batch.delete(plantDoc);
+  batch.set(userDoc, {'total_plants': FieldValue.increment(-1)}, SetOptions(merge : true));
 
   try {
-    await plantDoc.delete();
+    await batch.commit();
   } catch (e) {
     rethrow;
   }

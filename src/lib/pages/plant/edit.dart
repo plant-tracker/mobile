@@ -14,12 +14,10 @@ class PlantEditPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final AsyncValue<Plant?> plant =
         ref.watch(firestoreGetPlantProvider(plantId));
-    return Scaffold(
-      body: plant.when(
+    return plant.when(
         data: (plantData) => Center(child: PlantForm(editedPlant: plantData)),
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, stackTrace) => Center(child: Text('Error: $error')),
-      ),
     );
   }
 }
