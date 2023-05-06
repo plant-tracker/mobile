@@ -17,9 +17,10 @@ final firestoreDeletePlantProvider =
   final plantDoc = userDoc.collection('plants').doc(plantId);
 
   final batch = firestore.batch();
-      
+
   batch.delete(plantDoc);
-  batch.set(userDoc, {'total_plants': FieldValue.increment(-1)}, SetOptions(merge : true));
+  batch.set(userDoc, {'total_plants': FieldValue.increment(-1)},
+      SetOptions(merge: true));
 
   try {
     await batch.commit();

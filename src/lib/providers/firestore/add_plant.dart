@@ -21,7 +21,8 @@ final firestoreAddPlantProvider =
   final plantDoc = userDoc.collection('plants').doc();
 
   batch.set(plantDoc, plant.toMap());
-  batch.set(userDoc, {'total_plants': FieldValue.increment(1)}, SetOptions(merge : true));
+  batch.set(userDoc, {'total_plants': FieldValue.increment(1)},
+      SetOptions(merge: true));
 
   try {
     await batch.commit();

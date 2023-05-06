@@ -117,242 +117,240 @@ class _PlantFormState extends ConsumerState<PlantForm> {
     }
 
     return SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-          child: Column(
-            children: <Widget>[
-              FormBuilder(
-                key: _formKey,
-                onChanged: () {
-                  _formKey.currentState!.save();
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        children: <Widget>[
+          FormBuilder(
+            key: _formKey,
+            onChanged: () {
+              _formKey.currentState!.save();
+            },
+            autovalidateMode: AutovalidateMode.disabled,
+            initialValue: widget.editedPlant?.toFormData() ??
+                {
+                  'id': "",
+                  'type': 'fern',
+                  'photo_url': "",
+                  'created': "",
                 },
-                autovalidateMode: AutovalidateMode.disabled,
-                initialValue: widget.editedPlant?.toFormData() ??
-                    {
-                      'id': "",
-                      'type': 'fern',
-                      'photo_url': "",
-                      'created': "",
-                    },
-                skipDisabled: true,
-                child: Column(
-                  children: <Widget>[
-                    const SizedBox(height: 15),
-                    FormBuilderField(
-                      autovalidateMode: AutovalidateMode.always,
-                      name: 'photo_url',
-                      builder: (FormFieldState<String?> field) {
-                        return HookBuilder(
-                          builder: (context) => ImageUploader(
-                              initialValue: widget.editedPlant?.photoUrl ?? "",
-                              onChanged: field.didChange),
-                        );
-                      },
-                      validator: FormBuilderValidators.compose([
-                        FormBuilderValidators.required(),
-                      ]),
-                    ),
-                    FormBuilderTextField(
-                      autovalidateMode: AutovalidateMode.always,
-                      name: 'name',
-                      decoration: InputDecoration(
-                        labelText: 'Name',
-                        suffixIcon: _nameHasError
-                            ? const Icon(Icons.error, color: Colors.red)
-                            : const Icon(Icons.check, color: Colors.green),
-                      ),
-                      onChanged: (val) {
-                        setState(() {
-                          _nameHasError = !(_formKey
-                                  .currentState?.fields['name']
-                                  ?.validate() ??
+            skipDisabled: true,
+            child: Column(
+              children: <Widget>[
+                const SizedBox(height: 15),
+                FormBuilderField(
+                  autovalidateMode: AutovalidateMode.always,
+                  name: 'photo_url',
+                  builder: (FormFieldState<String?> field) {
+                    return HookBuilder(
+                      builder: (context) => ImageUploader(
+                          initialValue: widget.editedPlant?.photoUrl ?? "",
+                          onChanged: field.didChange),
+                    );
+                  },
+                  validator: FormBuilderValidators.compose([
+                    FormBuilderValidators.required(),
+                  ]),
+                ),
+                FormBuilderTextField(
+                  autovalidateMode: AutovalidateMode.always,
+                  name: 'name',
+                  decoration: InputDecoration(
+                    labelText: 'Name',
+                    suffixIcon: _nameHasError
+                        ? const Icon(Icons.error, color: Colors.red)
+                        : const Icon(Icons.check, color: Colors.green),
+                  ),
+                  onChanged: (val) {
+                    setState(() {
+                      _nameHasError =
+                          !(_formKey.currentState?.fields['name']?.validate() ??
                               false);
-                        });
-                      },
-                      validator: FormBuilderValidators.compose([
-                        FormBuilderValidators.required(),
-                      ]),
-                      textInputAction: TextInputAction.next,
-                    ),
-                    FormBuilderTextField(
-                      autovalidateMode: AutovalidateMode.always,
-                      name: 'species_name',
-                      decoration: InputDecoration(
-                        labelText: 'Species',
-                        suffixIcon: _speciesNameHasError
-                            ? const Icon(Icons.error, color: Colors.red)
-                            : const Icon(Icons.check, color: Colors.green),
-                      ),
-                      onChanged: (val) {
-                        setState(() {
-                          _speciesNameHasError = !(_formKey
-                                  .currentState?.fields['species_name']
-                                  ?.validate() ??
+                    });
+                  },
+                  validator: FormBuilderValidators.compose([
+                    FormBuilderValidators.required(),
+                  ]),
+                  textInputAction: TextInputAction.next,
+                ),
+                FormBuilderTextField(
+                  autovalidateMode: AutovalidateMode.always,
+                  name: 'species_name',
+                  decoration: InputDecoration(
+                    labelText: 'Species',
+                    suffixIcon: _speciesNameHasError
+                        ? const Icon(Icons.error, color: Colors.red)
+                        : const Icon(Icons.check, color: Colors.green),
+                  ),
+                  onChanged: (val) {
+                    setState(() {
+                      _speciesNameHasError = !(_formKey
+                              .currentState?.fields['species_name']
+                              ?.validate() ??
+                          false);
+                    });
+                  },
+                  validator: FormBuilderValidators.compose([
+                    FormBuilderValidators.required(),
+                  ]),
+                  textInputAction: TextInputAction.next,
+                ),
+                FormBuilderTextField(
+                  autovalidateMode: AutovalidateMode.always,
+                  name: 'location',
+                  decoration: InputDecoration(
+                    labelText: 'Location',
+                    suffixIcon: _locationHasError
+                        ? const Icon(Icons.error, color: Colors.red)
+                        : const Icon(Icons.check, color: Colors.green),
+                  ),
+                  onChanged: (val) {
+                    setState(() {
+                      _locationHasError = !(_formKey
+                              .currentState?.fields['location']
+                              ?.validate() ??
+                          false);
+                    });
+                  },
+                  validator: FormBuilderValidators.compose([
+                    FormBuilderValidators.required(),
+                  ]),
+                  textInputAction: TextInputAction.next,
+                ),
+                FormBuilderDropdown<String>(
+                  name: 'type',
+                  decoration: InputDecoration(
+                    labelText: 'Type',
+                    suffix: _plantTypeHasError
+                        ? const Icon(Icons.error)
+                        : const Icon(Icons.check),
+                    hintText: 'Select Type',
+                  ),
+                  validator: FormBuilderValidators.compose(
+                      [FormBuilderValidators.required()]),
+                  items: plantTypeOptions
+                      .map((plantType) => DropdownMenuItem(
+                            alignment: AlignmentDirectional.center,
+                            value: plantType,
+                            child: Text(plantType),
+                          ))
+                      .toList(),
+                  onChanged: (val) {
+                    setState(() {
+                      _plantTypeHasError =
+                          !(_formKey.currentState?.fields['type']?.validate() ??
                               false);
-                        });
-                      },
-                      validator: FormBuilderValidators.compose([
-                        FormBuilderValidators.required(),
-                      ]),
-                      textInputAction: TextInputAction.next,
+                    });
+                  },
+                  valueTransformer: (val) => val?.toString(),
+                ),
+                FormBuilderChoiceChip<String>(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  decoration: const InputDecoration(
+                      labelText: 'Temperature preference:'),
+                  name: 'temperature',
+                  initialValue: widget.editedPlant?.temperature != null
+                      ? describeEnum(widget.editedPlant!.temperature)
+                      : 'medium',
+                  options: const [
+                    FormBuilderChipOption(
+                      value: 'cold',
                     ),
-                    FormBuilderTextField(
-                      autovalidateMode: AutovalidateMode.always,
-                      name: 'location',
-                      decoration: InputDecoration(
-                        labelText: 'Location',
-                        suffixIcon: _locationHasError
-                            ? const Icon(Icons.error, color: Colors.red)
-                            : const Icon(Icons.check, color: Colors.green),
-                      ),
-                      onChanged: (val) {
-                        setState(() {
-                          _locationHasError = !(_formKey
-                                  .currentState?.fields['location']
-                                  ?.validate() ??
-                              false);
-                        });
-                      },
-                      validator: FormBuilderValidators.compose([
-                        FormBuilderValidators.required(),
-                      ]),
-                      textInputAction: TextInputAction.next,
+                    FormBuilderChipOption(
+                      value: 'medium',
                     ),
-                    FormBuilderDropdown<String>(
-                      name: 'type',
-                      decoration: InputDecoration(
-                        labelText: 'Type',
-                        suffix: _plantTypeHasError
-                            ? const Icon(Icons.error)
-                            : const Icon(Icons.check),
-                        hintText: 'Select Type',
-                      ),
-                      validator: FormBuilderValidators.compose(
-                          [FormBuilderValidators.required()]),
-                      items: plantTypeOptions
-                          .map((plantType) => DropdownMenuItem(
-                                alignment: AlignmentDirectional.center,
-                                value: plantType,
-                                child: Text(plantType),
-                              ))
-                          .toList(),
-                      onChanged: (val) {
-                        setState(() {
-                          _plantTypeHasError = !(_formKey
-                                  .currentState?.fields['type']
-                                  ?.validate() ??
-                              false);
-                        });
-                      },
-                      valueTransformer: (val) => val?.toString(),
-                    ),
-                    FormBuilderChoiceChip<String>(
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      decoration: const InputDecoration(
-                          labelText: 'Temperature preference:'),
-                      name: 'temperature',
-                      initialValue: widget.editedPlant?.temperature != null
-                          ? describeEnum(widget.editedPlant!.temperature)
-                          : 'medium',
-                      options: const [
-                        FormBuilderChipOption(
-                          value: 'cold',
-                        ),
-                        FormBuilderChipOption(
-                          value: 'medium',
-                        ),
-                        FormBuilderChipOption(
-                          value: 'warm',
-                        ),
-                      ],
-                    ),
-                    FormBuilderChoiceChip<String>(
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      decoration: const InputDecoration(
-                          labelText: 'Humidity preference:'),
-                      name: 'humidity',
-                      initialValue: widget.editedPlant?.humidity != null
-                          ? describeEnum(widget.editedPlant!.humidity)
-                          : 'medium',
-                      options: const [
-                        FormBuilderChipOption(
-                          value: 'low',
-                        ),
-                        FormBuilderChipOption(
-                          value: 'medium',
-                        ),
-                        FormBuilderChipOption(
-                          value: 'high',
-                        ),
-                      ],
-                    ),
-                    FormBuilderChoiceChip<String>(
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      decoration:
-                          const InputDecoration(labelText: 'Light preference:'),
-                      name: 'light_levels',
-                      initialValue: widget.editedPlant?.lightLevels != null
-                          ? describeEnum(widget.editedPlant!.lightLevels)
-                          : 'medium',
-                      options: const [
-                        FormBuilderChipOption(
-                          value: 'low',
-                        ),
-                        FormBuilderChipOption(
-                          value: 'medium',
-                        ),
-                        FormBuilderChipOption(
-                          value: 'high',
-                        ),
-                      ],
-                    ),
-                    FormBuilderField(
-                      name: 'id',
-                      builder: (FormFieldState<dynamic> field) {
-                        return const SizedBox.shrink();
-                      },
-                    ),
-                    FormBuilderField(
-                      name: 'created',
-                      builder: (FormFieldState<dynamic> field) {
-                        return const SizedBox.shrink();
-                      },
+                    FormBuilderChipOption(
+                      value: 'warm',
                     ),
                   ],
                 ),
-              ),
-              Row(
-                children: <Widget>[
-                  Expanded(
-                      child: ElevatedButton(
-                    child: const Text(
-                      'Save',
-                      style: TextStyle(color: Colors.white),
+                FormBuilderChoiceChip<String>(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  decoration:
+                      const InputDecoration(labelText: 'Humidity preference:'),
+                  name: 'humidity',
+                  initialValue: widget.editedPlant?.humidity != null
+                      ? describeEnum(widget.editedPlant!.humidity)
+                      : 'medium',
+                  options: const [
+                    FormBuilderChipOption(
+                      value: 'low',
                     ),
-                    onPressed: () {
-                      if (widget.editedPlant == null) {
-                        _addPlant(context);
-                      } else {
-                        _editPlant(context);
-                      }
-                    },
-                  )),
-                  const SizedBox(width: 20),
-                  Expanded(
-                    child: OutlinedButton(
-                      onPressed: () {
-                        _formKey.currentState?.reset();
-                      },
-                      child: Text(
-                        'Reset',
-                        style: TextStyle(
-                            color: Theme.of(context).colorScheme.secondary),
-                      ),
+                    FormBuilderChipOption(
+                      value: 'medium',
                     ),
+                    FormBuilderChipOption(
+                      value: 'high',
+                    ),
+                  ],
+                ),
+                FormBuilderChoiceChip<String>(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  decoration:
+                      const InputDecoration(labelText: 'Light preference:'),
+                  name: 'light_levels',
+                  initialValue: widget.editedPlant?.lightLevels != null
+                      ? describeEnum(widget.editedPlant!.lightLevels)
+                      : 'medium',
+                  options: const [
+                    FormBuilderChipOption(
+                      value: 'low',
+                    ),
+                    FormBuilderChipOption(
+                      value: 'medium',
+                    ),
+                    FormBuilderChipOption(
+                      value: 'high',
+                    ),
+                  ],
+                ),
+                FormBuilderField(
+                  name: 'id',
+                  builder: (FormFieldState<dynamic> field) {
+                    return const SizedBox.shrink();
+                  },
+                ),
+                FormBuilderField(
+                  name: 'created',
+                  builder: (FormFieldState<dynamic> field) {
+                    return const SizedBox.shrink();
+                  },
+                ),
+              ],
+            ),
+          ),
+          Row(
+            children: <Widget>[
+              Expanded(
+                  child: ElevatedButton(
+                child: const Text(
+                  'Save',
+                  style: TextStyle(color: Colors.white),
+                ),
+                onPressed: () {
+                  if (widget.editedPlant == null) {
+                    _addPlant(context);
+                  } else {
+                    _editPlant(context);
+                  }
+                },
+              )),
+              const SizedBox(width: 20),
+              Expanded(
+                child: OutlinedButton(
+                  onPressed: () {
+                    _formKey.currentState?.reset();
+                  },
+                  child: Text(
+                    'Reset',
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.secondary),
                   ),
-                ],
+                ),
               ),
             ],
           ),
-        );
+        ],
+      ),
+    );
   }
 }

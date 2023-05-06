@@ -9,7 +9,7 @@ class PlantAddPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Center(
-        child: PlantForm(),
-      );
+      child: PlantForm(),
+    );
   }
 }

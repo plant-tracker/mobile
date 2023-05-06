@@ -15,9 +15,9 @@ class PlantEditPage extends ConsumerWidget {
     final AsyncValue<Plant?> plant =
         ref.watch(firestoreGetPlantProvider(plantId));
     return plant.when(
-        data: (plantData) => Center(child: PlantForm(editedPlant: plantData)),
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stackTrace) => Center(child: Text('Error: $error')),
+      data: (plantData) => Center(child: PlantForm(editedPlant: plantData)),
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (error, stackTrace) => Center(child: Text('Error: $error')),
     );
   }
 }

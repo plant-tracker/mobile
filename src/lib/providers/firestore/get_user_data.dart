@@ -2,7 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final userDataProvider = FutureProvider<DocumentSnapshot<Map<String, dynamic>>>((ref) async {
+final userDataProvider =
+    FutureProvider<DocumentSnapshot<Map<String, dynamic>>>((ref) async {
   final auth = FirebaseAuth.instance;
   final firestore = FirebaseFirestore.instance;
 

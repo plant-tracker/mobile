@@ -19,94 +19,95 @@ class PlantDetailsPage extends ConsumerWidget {
     return plantAsyncValue.when(
       data: (plant) => plant != null
           ? CustomScrollView(
-                slivers: [
-                  SliverList(
-                    delegate: SliverChildListDelegate(
-                      [
-                        const SizedBox(height: 16),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              PlantCard(
-                                plant: plant,
-                                onTap: () {},
-                              ),
-                              const SizedBox(height: 8),
-                              Row(
+              slivers: [
+                SliverList(
+                  delegate: SliverChildListDelegate(
+                    [
+                      const SizedBox(height: 16),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            PlantCard(
+                              plant: plant,
+                              onTap: () {},
+                            ),
+                            const SizedBox(height: 8),
+                            Row(
+                              children: [
+                                const Icon(Icons.calendar_today, size: 24),
+                                const SizedBox(width: 8),
+                                Text('Creation Date: ${plant.created}'),
+                              ],
+                            ),
+                            const SizedBox(height: 16),
+                            PlantPreferencesCard(
+                              humidity: describeEnum(plant.humidity),
+                              lightLevels: describeEnum(plant.lightLevels),
+                              temperature: describeEnum(plant.temperature),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 16),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const Icon(Icons.calendar_today, size: 24),
-                                  const SizedBox(width: 8),
-                                  Text('Creation Date: ${plant.created}'),
+                                  Text(
+                                    'Actions',
+                                    style:
+                                        Theme.of(context).textTheme.titleLarge,
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Expanded(
+                                        child: ElevatedButton.icon(
+                                          onPressed: () {
+                                            context.go("/plants/$plantId/edit");
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.blue,
+                                          ),
+                                          icon: const Icon(Icons.edit),
+                                          label: const Text('Edit'),
+                                        ),
+                                      ),
+                                      SizedBox(width: 16),
+                                      Expanded(
+                                        child: ElevatedButton.icon(
+                                          onPressed: () {
+                                            showModalBottomSheet(
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              context: context,
+                                              builder: (_) => DeletePlantModal(
+                                                plantId: plantId,
+                                              ),
+                                            );
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.red,
+                                          ),
+                                          icon: const Icon(Icons.delete),
+                                          label: const Text('Delete'),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ],
                               ),
-                              const SizedBox(height: 16),
-                              PlantPreferencesCard(
-                                humidity: describeEnum(plant.humidity),
-                                lightLevels: describeEnum(plant.lightLevels),
-                                temperature: describeEnum(plant.temperature),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 16),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Actions',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleLarge,
-                                    ),
-                                    const SizedBox(height: 8),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                      children: [
-                                        Expanded(
-                                          child: ElevatedButton.icon(
-                                            onPressed: () {
-                                              context.go("/plants/$plantId/edit");
-                                            },
-                                            style: ElevatedButton.styleFrom(
-                                              backgroundColor: Colors.blue,
-                                            ),
-                                            icon: const Icon(Icons.edit),
-                                            label: const Text('Edit'),
-                                          ),
-                                        ),
-                                        SizedBox(width: 16),
-                                        Expanded(
-                                          child: ElevatedButton.icon(
-                                            onPressed: () {
-                                              showModalBottomSheet(
-                                                backgroundColor: Colors.transparent,
-                                                context: context,
-                                                builder: (_) => DeletePlantModal(
-                                                  plantId: plantId,
-                                                ),
-                                              );
-                                            },
-                                            style: ElevatedButton.styleFrom(
-                                              backgroundColor: Colors.red,
-                                            ),
-                                            icon: const Icon(Icons.delete),
-                                            label: const Text('Delete'),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                        const SizedBox(height: 16),
-                      ],
-                    ),
+                      ),
+                      const SizedBox(height: 16),
+                    ],
                   ),
-                ],
-              )
+                ),
+              ],
+            )
           : const SizedBox.shrink(),
       loading: () => const Center(child: CircularProgressIndicator()),
       error: (error, stackTrace) => Center(child: Text('Error: $error')),
