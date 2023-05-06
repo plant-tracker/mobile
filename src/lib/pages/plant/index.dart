@@ -25,7 +25,7 @@ class PlantsPage extends ConsumerWidget {
             );
           }
           return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.all(16),
             child: ListView.builder(
               itemCount: plants.length,
               itemBuilder: (context, index) {
