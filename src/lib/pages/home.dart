@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:plant_tracker/providers/firestore.dart';
 import 'package:plant_tracker/providers/auth.dart';
 import 'package:plant_tracker/widgets/plant/stats.dart';
+import 'package:plant_tracker/widgets/notification_list.dart';
+
 import 'package:plant_tracker/models/user_data.dart';
 
 class HomePage extends ConsumerWidget {
@@ -31,6 +33,7 @@ class HomePage extends ConsumerWidget {
                     totalTasks: totalTasks,
                   ),
                   const SizedBox(height: 16),
+                  NotificationList(),
                 ],
               ),
             );

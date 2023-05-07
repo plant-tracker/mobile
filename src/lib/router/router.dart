@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:plant_tracker/pages/pages.dart';
 import 'package:plant_tracker/providers/auth.dart';
+import 'package:plant_tracker/providers/notification.dart';
+
 import 'package:plant_tracker/widgets/navigation_bar.dart';
 import 'package:plant_tracker/widgets/burger_menu.dart';
 
@@ -44,6 +46,19 @@ final routerProvider = Provider<GoRouter>((ref) {
           appBar: AppBar(
             title: Consumer(
               builder: (context, ref, child) {
+                final notificationHandler =
+                    ref.watch(notificationHandlerProvider);
+                final snapshot = ref.watch(notificationStreamProvider);
+                snapshot.when(
+                  data: (data) {
+                    if (data.docs.isNotEmpty) {
+                      notificationHandler(data);
+                    }
+                  },
+                  loading: () {},
+                  error: (error, stackTrace) {},
+                );
+
                 final routeInfo = routeTitleMap.entries.firstWhere(
                     (entry) => RegExp(entry.key).hasMatch(state.location),
                     orElse: () => MapEntry(
