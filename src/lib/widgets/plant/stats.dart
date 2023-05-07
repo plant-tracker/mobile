@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:plant_tracker/widgets/stat_card.dart';
+import 'package:plant_tracker/widgets/stat_info.dart';
 
-class PlantStats extends StatelessWidget {
+class PlantStatInfo extends StatelessWidget {
   final int totalPlants;
   final int totalTasks;
 
-  const PlantStats({
+  const PlantStatInfo({
     required this.totalPlants,
     required this.totalTasks,
   });
@@ -31,11 +31,11 @@ class PlantStats extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    StatisticCard(
+                    StatisticInfo(
                       label: 'Plants',
                       count: totalPlants,
                     ),
-                    StatisticCard(
+                    StatisticInfo(
                       label: 'Tasks',
                       count: totalTasks,
                     ),

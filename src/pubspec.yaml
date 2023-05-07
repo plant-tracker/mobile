@@ -1,7 +1,7 @@
 name: plant_tracker
 description: A new Flutter project.
 publish_to: 'none'
-version: 1.0.0+1
+version: 0.0.0+1
 
 environment:
   sdk: '>=2.19.6 <3.0.0'
@@ -32,6 +32,8 @@ dependencies:
   path: ^1.8.2
   fake_cloud_firestore: ^2.4.1+1
   firebase_auth_mocks: ^0.11.0
+  package_info: ^2.0.2
+  android_intent: ^2.0.2
 
 dev_dependencies:
   flutter_test:

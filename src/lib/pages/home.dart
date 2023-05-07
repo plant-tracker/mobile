@@ -13,22 +13,38 @@ class HomePage extends ConsumerWidget {
     final AsyncValue<DocumentSnapshot<Map<String, dynamic>>> userData =
         ref.watch(userDataProvider);
 
-    return userData.when(
-      data: (data) {
-        final totalPlants = data.data()!.containsKey('total_plants')
-            ? data!['total_plants'] as int
-            : 0;
-        final totalTasks = data.data()!.containsKey('total_tasks')
-            ? data!['total_tasks'] as int
-            : 0;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        userData.when(
+          data: (data) {
+            final totalPlants = data.data()!.containsKey('total_plants')
+                ? data!['total_plants'] as int
+                : 0;
+            final totalTasks = data.data()!.containsKey('total_tasks')
+                ? data!['total_tasks'] as int
+                : 0;
 
-        return PlantStats(
-          totalPlants: totalPlants,
-          totalTasks: totalTasks,
-        );
-      },
-      loading: () => const CircularProgressIndicator(),
-      error: (error, stackTrace) => Text('Error: $error'),
+            return Expanded(
+              child: ListView(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                children: [
+                  const SizedBox(height: 16),
+                  PlantStatInfo(
+                    totalPlants: totalPlants,
+                    totalTasks: totalTasks,
+                  ),
+                  const SizedBox(height: 16),
+                ],
+              ),
+            );
+          },
+          loading: () => const Center(
+            child: CircularProgressIndicator(),
+          ),
+          error: (error, stackTrace) => Text('Error: $error'),
+        ),
+      ],
     );
   }
 }

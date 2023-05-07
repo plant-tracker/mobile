@@ -10,7 +10,7 @@ final firestoreDeletePlantProvider =
   final user = auth.currentUser;
 
   if (user == null) {
-    throw Exception('User not logged in');
+    throw Exception('User not authenticated');
   }
 
   final userDoc = firestore.collection('users').doc(user.uid);
