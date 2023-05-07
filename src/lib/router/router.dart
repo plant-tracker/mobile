@@ -7,17 +7,25 @@ import 'package:plant_tracker/providers/auth.dart';
 import 'package:plant_tracker/widgets/navigation_bar.dart';
 import 'package:plant_tracker/widgets/burger_menu.dart';
 
+  class RouteInfo {
+    final IconData icon;
+    final String title;
+
+    const RouteInfo({required this.icon, required this.title});
+  }
+
+
 final routerProvider = Provider<GoRouter>((ref) {
   final authState = ref.watch(authStateProvider);
 
   final routeTitleMap = {
-    r'^/$': 'Home',
-    r'^/settings$': 'Settings',
-    r'^/plants/[^/]+/edit$': 'Edit Plant',
-    r'^/plants/add$': 'Add Plant',
-    r'^/plants/[^/]+$': 'Plant Info',
-    r'^/plants$': 'Plants',
-    r'^/login$': 'Login'
+    r'^/$': RouteInfo(icon: Icons.home, title: 'Home'),
+    r'^/settings$': RouteInfo(icon: Icons.settings, title: 'Settings'),
+    r'^/plants/[^/]+/edit$': RouteInfo(icon: Icons.edit, title: 'Edit Plant'),
+    r'^/plants/add$': RouteInfo(icon: Icons.grass, title: 'Add Plant'),
+    r'^/plants/[^/]+$': RouteInfo(icon: Icons.info, title: 'Plant Info'),
+    r'^/plants$': RouteInfo(icon: Icons.grass, title: 'Plants'),
+    r'^/login$': RouteInfo(icon: Icons.login, title: 'Login')
   };
 
   return GoRouter(
@@ -37,12 +45,18 @@ final routerProvider = Provider<GoRouter>((ref) {
           appBar: AppBar(
             title: Consumer(
               builder: (context, ref, child) {
-                final title = routeTitleMap.entries
-                    .firstWhere(
-                        (entry) => RegExp(entry.key).hasMatch(state.location),
-                        orElse: () => const MapEntry('', 'Unknown'))
-                    .value;
-                return Text(title);
+                final routeInfo = routeTitleMap.entries
+                    .firstWhere((entry) => RegExp(entry.key).hasMatch(state.location),
+                        orElse: () => MapEntry('', RouteInfo(icon: Icons.error, title: 'Unknown')));
+                final title = routeInfo.value.title;
+                final icon = routeInfo.value.icon;
+                return Row(
+                  children: [
+                    Icon(icon),
+                    SizedBox(width: 8),
+                    Text(title),
+                  ],
+                );
               },
             ),
           ),
