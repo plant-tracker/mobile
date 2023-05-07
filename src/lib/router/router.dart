@@ -7,13 +7,12 @@ import 'package:plant_tracker/providers/auth.dart';
 import 'package:plant_tracker/widgets/navigation_bar.dart';
 import 'package:plant_tracker/widgets/burger_menu.dart';
 
-  class RouteInfo {
-    final IconData icon;
-    final String title;
+class RouteInfo {
+  final IconData icon;
+  final String title;
 
-    const RouteInfo({required this.icon, required this.title});
-  }
-
+  const RouteInfo({required this.icon, required this.title});
+}
 
 final routerProvider = Provider<GoRouter>((ref) {
   final authState = ref.watch(authStateProvider);
@@ -45,9 +44,10 @@ final routerProvider = Provider<GoRouter>((ref) {
           appBar: AppBar(
             title: Consumer(
               builder: (context, ref, child) {
-                final routeInfo = routeTitleMap.entries
-                    .firstWhere((entry) => RegExp(entry.key).hasMatch(state.location),
-                        orElse: () => MapEntry('', RouteInfo(icon: Icons.error, title: 'Unknown')));
+                final routeInfo = routeTitleMap.entries.firstWhere(
+                    (entry) => RegExp(entry.key).hasMatch(state.location),
+                    orElse: () => MapEntry(
+                        '', RouteInfo(icon: Icons.error, title: 'Unknown')));
                 final title = routeInfo.value.title;
                 final icon = routeInfo.value.icon;
                 return Row(
