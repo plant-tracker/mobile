@@ -1,26 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:plant_tracker/models/user_data.dart';
 
-final userDataProvider =
-    StreamProvider<DocumentSnapshot<Map<String, dynamic>>>((ref) {
+final userDataProvider = StreamProvider.autoDispose<UserData>((ref) {
   final auth = FirebaseAuth.instance;
   final firestore = FirebaseFirestore.instance;
 
-  return auth.authStateChanges().asyncMap((user) async {
-    if (user == null) {
-      throw Exception('User not authenticated');
-    }
+  final user = auth.currentUser;
 
-    final userDoc = firestore.collection('users').doc(user.uid);
+  if (user == null) {
+    throw Exception('User not authenticated');
+  }
 
-    final snapshot = await userDoc.get();
+  final userDoc =
+      firestore.collection('users').doc(user.uid).withConverter<UserData>(
+            fromFirestore: (snapshot, _) => UserData.fromFirestore(snapshot),
+            toFirestore: (userData, _) => userData.toMap(),
+          );
 
-    if (!snapshot.exists) {
-      await userDoc.set({}, SetOptions(merge: true));
-      return await userDoc.get();
-    }
-
-    return snapshot;
-  });
+  return userDoc.snapshots().map((snapshot) => snapshot.data()!);
 });
