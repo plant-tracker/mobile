@@ -42,10 +42,12 @@ class PlantDetailsPage extends ConsumerWidget {
                               ],
                             ),
                             const SizedBox(height: 16),
-                            PlantPreferencesCard(
-                              humidity: describeEnum(plant.humidity),
-                              lightLevels: describeEnum(plant.lightLevels),
-                              temperature: describeEnum(plant.temperature),
+                            Center(
+                              child: PlantPreferencesCard(
+                                humidity: describeEnum(plant.humidity),
+                                lightLevels: describeEnum(plant.lightLevels),
+                                temperature: describeEnum(plant.temperature),
+                              ),
                             ),
                             Padding(
                               padding: const EdgeInsets.only(top: 16),
