@@ -12,17 +12,21 @@ final firestoreAddPlantProvider =
   final user = auth.currentUser;
 
   if (user == null) {
-    throw Exception('User not logged in');
+    throw Exception('User not authenticated');
   }
 
-  final plantCollection =
-      firestore.collection('users').doc(user.uid).collection('plants');
+  final batch = firestore.batch();
 
-  final newPlantDoc = plantCollection.doc();
+  final userDoc = firestore.collection('users').doc(user.uid);
+  final plantDoc = userDoc.collection('plants').doc();
+
+  batch.set(plantDoc, plant.toMap());
+  batch.set(userDoc, {'total_plants': FieldValue.increment(1)},
+      SetOptions(merge: true));
 
   try {
-    await newPlantDoc.set(plant.toMap());
-    return newPlantDoc.id;
+    await batch.commit();
+    return plantDoc.id;
   } catch (e) {
     rethrow;
   }

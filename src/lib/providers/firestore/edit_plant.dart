@@ -12,7 +12,7 @@ final firestoreEditPlantProvider =
   final user = auth.currentUser;
 
   if (user == null) {
-    throw Exception('User not logged in');
+    throw Exception('User not authenticated');
   }
 
   final plantCollection =

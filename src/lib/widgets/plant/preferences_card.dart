@@ -24,11 +24,12 @@ class PlantPreferencesCard extends StatelessWidget {
           children: [
             Text(
               'Preferences',
-              style: Theme.of(context).textTheme.titleLarge,
+              style: Theme.of(context).textTheme.headline6,
             ),
             const SizedBox(height: 8),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
               children: [
                 _buildPreferenceChip(
                   context,
@@ -65,6 +66,7 @@ class PlantPreferencesCard extends StatelessWidget {
     return Chip(
       backgroundColor: color,
       label: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Icon(
             icon,
@@ -73,7 +75,7 @@ class PlantPreferencesCard extends StatelessWidget {
           const SizedBox(width: 4),
           Text(
             value,
-            style: Theme.of(context).textTheme.titleMedium!.copyWith(
+            style: Theme.of(context).textTheme.subtitle2!.copyWith(
                   color: Colors.black,
                 ),
           ),

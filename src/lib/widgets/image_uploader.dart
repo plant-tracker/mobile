@@ -48,13 +48,15 @@ class ImageUploader extends HookConsumerWidget {
                   )
                 : Container(
                     decoration: BoxDecoration(
-                      border: Border.all(color: Theme.of(context).primaryColor, width: 2.0),
+                      border: Border.all(
+                          color: Theme.of(context).primaryColor, width: 2.0),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.camera_alt, color: Theme.of(context).primaryColor, size: 50),
+                        Icon(Icons.camera_alt,
+                            color: Theme.of(context).primaryColor, size: 50),
                         SizedBox(height: 8),
                         Text(
                           'Upload Image',

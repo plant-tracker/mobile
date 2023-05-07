@@ -6,6 +6,7 @@ import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 late FakeFirebaseFirestore firestore;
 final auth = MockFirebaseAuth();
@@ -58,12 +59,31 @@ void main() {
       await auth.signOut();
     });
 
-    test('User should create plant document for themselves.', () async {
+    test('User can create his own document.', () async {
+      final uid = auth.currentUser!.uid;
+      expect(() => firestore.doc('users/$uid').set({}), returnsNormally);
+    });
+
+    test('User should create plant document for themselves and increment totals in batch, then delete.', () async {
       final plantId = 'plant1';
       final uid = auth.currentUser!.uid;
 
-      expect(
-          () => firestore.doc('users/$uid/plants/$plantId').set(storeablePlantData(plantId)), returnsNormally);
+      final batch = firestore.batch();
+
+      final userDoc = firestore.collection('users').doc(uid);
+      final newPlantDoc = userDoc.collection('plants').doc();
+
+      batch.set(newPlantDoc, storeablePlantData(plantId));
+      batch.set(userDoc, {'total_plants': FieldValue.increment(1)}, SetOptions(merge : true));
+
+      expect(() => batch.commit(), returnsNormally);
+
+      final batchDelete = firestore.batch();
+      
+      batchDelete.delete(newPlantDoc);
+      batchDelete.set(userDoc, {'total_plants': FieldValue.increment(-1)}, SetOptions(merge : true));
+
+      expect(() => batchDelete.commit(), returnsNormally);
     });
 
     test('User should not create plant document for others.', () async {

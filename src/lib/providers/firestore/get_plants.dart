@@ -12,7 +12,7 @@ final firestoreGetPlantsProvider =
   final user = auth.currentUser;
 
   if (user == null) {
-    return Stream.value([]);
+    throw Exception('User not authenticated');
   }
 
   final plantsCollection = firestore

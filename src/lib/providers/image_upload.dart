@@ -46,13 +46,7 @@ class ImageProvider extends StateNotifier<File?> {
     final user = FirebaseAuth.instance.currentUser;
 
     if (user == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("User not logged in."),
-          backgroundColor: Colors.red,
-        ),
-      );
-      return null;
+      throw Exception('User not authenticated');
     }
 
     final fileName = basename(state!.path);

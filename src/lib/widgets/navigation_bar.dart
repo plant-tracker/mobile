@@ -12,6 +12,7 @@ class NavigationBarMenu extends ConsumerWidget {
     final navbarIndex = ref.watch(navbarProvider.notifier).state;
 
     return BottomNavigationBar(
+      backgroundColor: Theme.of(context).cardColor,
       currentIndex: navbarIndex,
       onTap: (int index) {
         ref.read(navbarProvider.notifier).state = index;
