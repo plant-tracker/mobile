@@ -7,6 +7,7 @@ import 'package:plant_tracker/providers/firestore.dart';
 import 'package:plant_tracker/widgets/plant/preferences_card.dart';
 import 'package:plant_tracker/widgets/plant/card.dart';
 import 'package:plant_tracker/widgets/plant/delete.dart';
+import 'package:plant_tracker/widgets/plant/type_card.dart';
 
 class PlantDetailsPage extends ConsumerWidget {
   const PlantDetailsPage({super.key, required this.plantId});
@@ -41,6 +42,8 @@ class PlantDetailsPage extends ConsumerWidget {
                                 Text('Creation Date: ${plant.created}'),
                               ],
                             ),
+                            const SizedBox(height: 16),
+                            PlantTypeCard(plantType: describeEnum(plant.type)),
                             const SizedBox(height: 16),
                             Center(
                               child: PlantPreferencesCard(
