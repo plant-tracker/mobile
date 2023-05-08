@@ -22,6 +22,7 @@ final routerProvider = Provider<GoRouter>((ref) {
   final routeTitleMap = {
     r'^/$': RouteInfo(icon: Icons.home, title: 'Home'),
     r'^/settings$': RouteInfo(icon: Icons.settings, title: 'Settings'),
+    r'^/plants/[^/]+/task/add$': RouteInfo(icon: Icons.add, title: 'Add task'),
     r'^/plants/[^/]+/edit$': RouteInfo(icon: Icons.edit, title: 'Edit Plant'),
     r'^/plants/add$': RouteInfo(icon: Icons.grass, title: 'Add Plant'),
     r'^/plants/[^/]+$': RouteInfo(icon: Icons.info, title: 'Plant Info'),
@@ -116,6 +117,13 @@ final routerProvider = Provider<GoRouter>((ref) {
             builder: (context, state) {
               final plantId = state.params['plantId'];
               return PlantEditPage(plantId: plantId!);
+            },
+          ),
+          GoRoute(
+            path: '/plants/:plantId/task/add',
+            builder: (context, state) {
+              final plantId = state.params['plantId'];
+              return TaskAddPage(plantId: plantId!);
             },
           ),
         ],

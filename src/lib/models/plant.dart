@@ -7,7 +7,7 @@ enum Temperature { cold, medium, warm }
 
 enum LightLevel { low, medium, high }
 
-enum PlantType { bonsai, succulent, cactus, fern, other }
+enum PlantType { bonsai, succulent, herb, tree, flower, cactus, fern, other }
 
 class Plant {
   final String id;
