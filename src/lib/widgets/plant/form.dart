@@ -147,9 +147,6 @@ class _PlantFormState extends ConsumerState<PlantForm> {
                           onChanged: field.didChange),
                     );
                   },
-                  validator: FormBuilderValidators.compose([
-                    FormBuilderValidators.required(),
-                  ]),
                 ),
                 FormBuilderTextField(
                   autovalidateMode: AutovalidateMode.always,

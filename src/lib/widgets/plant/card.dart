@@ -30,11 +30,16 @@ class PlantCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                   child: Hero(
                     tag: plant.photoUrl,
-                    child: FadeInImage.assetNetwork(
-                      placeholder: 'assets/images/plant_placeholder.png',
-                      image: plant.photoUrl,
-                      fit: BoxFit.cover,
-                    ),
+                    child: plant.photoUrl.isNotEmpty
+                        ? FadeInImage.assetNetwork(
+                            placeholder: 'assets/images/plant_placeholder.png',
+                            image: plant.photoUrl,
+                            fit: BoxFit.cover,
+                          )
+                        : Image.asset(
+                            'assets/images/plant_placeholder.png',
+                            fit: BoxFit.cover,
+                          ),
                   ),
                 ),
               ),
