@@ -31,7 +31,8 @@ class PlantTasksList extends ConsumerWidget {
               return TaskCard(
                 task: task,
                 onDelete: () async {
-                  ref.read(firestoreDeleteTaskProvider({'plantId': plantId, 'taskId': task.id}));
+                  ref.read(firestoreDeleteTaskProvider(
+                      {'plantId': plantId, 'taskId': task.id}));
                 },
               );
             },

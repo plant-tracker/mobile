@@ -20,21 +20,20 @@ class NotificationList extends ConsumerWidget {
           );
         }
         return SizedBox(
-  height: 500,
-  child: ListView.builder(
-            shrinkWrap: true,
-            itemCount: notifications.length,
-            itemBuilder: (context, index) {
-              final notification = notifications[index];
-              return NotificationCard(
-                notification: notification,
-                onDelete: () {
-                  ref.read(deleteNotificationProvider(notification.id));
-                },
-              );
-            },
-          )
-        );
+            height: 500,
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: notifications.length,
+              itemBuilder: (context, index) {
+                final notification = notifications[index];
+                return NotificationCard(
+                  notification: notification,
+                  onDelete: () {
+                    ref.read(deleteNotificationProvider(notification.id));
+                  },
+                );
+              },
+            ));
       },
       loading: () => const Center(
         child: CircularProgressIndicator(),
