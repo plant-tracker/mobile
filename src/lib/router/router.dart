@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:plant_tracker/pages/pages.dart';
 import 'package:plant_tracker/providers/auth.dart';
+import 'package:plant_tracker/providers/notification.dart';
+
 import 'package:plant_tracker/widgets/navigation_bar.dart';
 import 'package:plant_tracker/widgets/burger_menu.dart';
 
@@ -20,6 +22,7 @@ final routerProvider = Provider<GoRouter>((ref) {
   final routeTitleMap = {
     r'^/$': RouteInfo(icon: Icons.home, title: 'Home'),
     r'^/settings$': RouteInfo(icon: Icons.settings, title: 'Settings'),
+    r'^/plants/[^/]+/task/add$': RouteInfo(icon: Icons.add, title: 'Add task'),
     r'^/plants/[^/]+/edit$': RouteInfo(icon: Icons.edit, title: 'Edit Plant'),
     r'^/plants/add$': RouteInfo(icon: Icons.grass, title: 'Add Plant'),
     r'^/plants/[^/]+$': RouteInfo(icon: Icons.info, title: 'Plant Info'),
@@ -44,6 +47,19 @@ final routerProvider = Provider<GoRouter>((ref) {
           appBar: AppBar(
             title: Consumer(
               builder: (context, ref, child) {
+                final notificationHandler =
+                    ref.watch(notificationHandlerProvider);
+                final snapshot = ref.watch(notificationStreamProvider);
+                snapshot.when(
+                  data: (data) {
+                    if (data.docs.isNotEmpty) {
+                      notificationHandler(data);
+                    }
+                  },
+                  loading: () {},
+                  error: (error, stackTrace) {},
+                );
+
                 final routeInfo = routeTitleMap.entries.firstWhere(
                     (entry) => RegExp(entry.key).hasMatch(state.location),
                     orElse: () => MapEntry(
@@ -101,6 +117,13 @@ final routerProvider = Provider<GoRouter>((ref) {
             builder: (context, state) {
               final plantId = state.params['plantId'];
               return PlantEditPage(plantId: plantId!);
+            },
+          ),
+          GoRoute(
+            path: '/plants/:plantId/task/add',
+            builder: (context, state) {
+              final plantId = state.params['plantId'];
+              return TaskAddPage(plantId: plantId!);
             },
           ),
         ],

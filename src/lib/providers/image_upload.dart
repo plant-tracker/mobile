@@ -11,7 +11,7 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final imageProvider = StateNotifierProvider((_) => ImageProvider());
+final imageProvider = StateNotifierProvider.autoDispose((_) => ImageProvider());
 
 class ImageProvider extends StateNotifier<File?> {
   ImageProvider() : super(null);
