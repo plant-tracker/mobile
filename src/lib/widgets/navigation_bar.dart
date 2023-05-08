@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final navbarProvider = StateProvider<int>((_) => 0);
+final navbarProvider = StateProvider.autoDispose<int>((_) => 0);
 
 class NavigationBarMenu extends ConsumerWidget {
   const NavigationBarMenu({Key? key}) : super(key: key);
