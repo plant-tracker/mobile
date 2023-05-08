@@ -19,8 +19,9 @@ class NotificationList extends ConsumerWidget {
             child: Text('You have no notifications.'),
           );
         }
-        return Expanded(
-          child: ListView.builder(
+        return SizedBox(
+  height: 500,
+  child: ListView.builder(
             shrinkWrap: true,
             itemCount: notifications.length,
             itemBuilder: (context, index) {
@@ -32,7 +33,7 @@ class NotificationList extends ConsumerWidget {
                 },
               );
             },
-          ),
+          )
         );
       },
       loading: () => const Center(

@@ -20,7 +20,8 @@ class PlantTasksList extends ConsumerWidget {
             child: Text('No tasks found.'),
           );
         }
-        return Expanded(
+        return SizedBox(
+          height: 300,
           child: ListView.builder(
             shrinkWrap: true,
             itemCount: tasks.length,
@@ -30,8 +31,7 @@ class PlantTasksList extends ConsumerWidget {
               return TaskCard(
                 task: task,
                 onDelete: () async {
-                  ref.read(firestoreDeleteTaskProvider(
-                      {'plantId': plantId, 'taskId': task.id}));
+                  ref.read(firestoreDeleteTaskProvider({'plantId': plantId, 'taskId': task.id}));
                 },
               );
             },
