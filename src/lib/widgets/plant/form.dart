@@ -35,6 +35,18 @@ class _PlantFormState extends ConsumerState<PlantForm> {
   var plantTypeOptions =
       PlantType.values.map((c) => c.toString().split('.').last).toList();
 
+  Map<String, String> plantTypeLabels = {
+    'bonsai': 'Bonsai',
+    'succulent': 'Succulent',
+    'herb': 'Herb',
+    'tree': 'Tree',
+    'flower': 'Flower',
+    'cactus': 'Cactus',
+    'fern': 'Fern',
+    'seed_plant': 'Seed Plant',
+    'other': 'Other',
+  };
+
   void _addPlant(BuildContext context) async {
     if (_formKey.currentState?.saveAndValidate() ?? false) {
       try {
@@ -228,7 +240,7 @@ class _PlantFormState extends ConsumerState<PlantForm> {
                       .map((plantType) => DropdownMenuItem(
                             alignment: AlignmentDirectional.center,
                             value: plantType,
-                            child: Text(plantType),
+                            child: Text(plantTypeLabels![plantType] ?? 'Missing'),
                           ))
                       .toList(),
                   onChanged: (val) {
