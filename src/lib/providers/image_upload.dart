@@ -11,7 +11,7 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final imageProvider = StateNotifierProvider.autoDispose((_) => ImageProvider());
+final imageProvider = StateNotifierProvider((_) => ImageProvider());
 
 class ImageProvider extends StateNotifier<File?> {
   ImageProvider() : super(null);
@@ -66,6 +66,7 @@ class ImageProvider extends StateNotifier<File?> {
     try {
       final uploadTask = storageRef.putFile(compressedFile);
       await uploadTask.whenComplete(() {
+        state = null;
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text("Image uploaded successfully."),

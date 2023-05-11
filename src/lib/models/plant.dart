@@ -1,13 +1,24 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 enum Humidity { low, medium, high }
 
-enum Temperature { cold, medium, warm }
+enum Temperature { cool, medium, warm }
 
 enum LightLevel { low, medium, high }
 
-enum PlantType { bonsai, succulent, herb, tree, flower, cactus, fern, other }
+enum PlantType {
+  bonsai,
+  succulent,
+  herb,
+  tree,
+  flower,
+  cactus,
+  fern,
+  seed_plant,
+  other
+}
 
 class Plant {
   final String id;
@@ -74,8 +85,8 @@ class Plant {
       doc.id,
       data['name'],
       data['species_name'],
-      PlantType.values
-          .firstWhere((e) => e.toString() == 'PlantType.${data['type']}'),
+      PlantType.values.firstWhere((e) =>
+          e.toString().replaceAll('_', ' ') == 'PlantType.${data['type']}'),
       data['location'],
       Humidity.values
           .firstWhere((e) => e.toString() == 'Humidity.${data['humidity']}'),
@@ -92,7 +103,7 @@ class Plant {
     return {
       'name': name,
       'species_name': speciesName,
-      'type': describeEnum(type),
+      'type': describeEnum(type).replaceAll('_', ' '),
       'location': location,
       'humidity': describeEnum(humidity),
       'temperature': describeEnum(temperature),
