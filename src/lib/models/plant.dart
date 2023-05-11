@@ -8,7 +8,17 @@ enum Temperature { cool, medium, warm }
 
 enum LightLevel { low, medium, high }
 
-enum PlantType { bonsai, succulent, herb, tree, flower, cactus, fern, seed_plant, other }
+enum PlantType {
+  bonsai,
+  succulent,
+  herb,
+  tree,
+  flower,
+  cactus,
+  fern,
+  seed_plant,
+  other
+}
 
 class Plant {
   final String id;
@@ -75,8 +85,8 @@ class Plant {
       doc.id,
       data['name'],
       data['species_name'],
-      PlantType.values
-          .firstWhere((e) => e.toString().replaceAll('_', ' ') == 'PlantType.${data['type']}'),
+      PlantType.values.firstWhere((e) =>
+          e.toString().replaceAll('_', ' ') == 'PlantType.${data['type']}'),
       data['location'],
       Humidity.values
           .firstWhere((e) => e.toString() == 'Humidity.${data['humidity']}'),

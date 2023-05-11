@@ -240,7 +240,8 @@ class _PlantFormState extends ConsumerState<PlantForm> {
                       .map((plantType) => DropdownMenuItem(
                             alignment: AlignmentDirectional.center,
                             value: plantType,
-                            child: Text(plantTypeLabels![plantType] ?? 'Missing'),
+                            child:
+                                Text(plantTypeLabels![plantType] ?? 'Missing'),
                           ))
                       .toList(),
                   onChanged: (val) {

@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:plant_tracker/models/user_data.dart';
 
-final userDataProvider = StreamProvider.autoDispose<UserData>((ref) {
+final userDataProvider = StreamProvider.autoDispose<UserData>((ref) async* {
   final auth = FirebaseAuth.instance;
   final firestore = FirebaseFirestore.instance;
 
@@ -19,5 +19,11 @@ final userDataProvider = StreamProvider.autoDispose<UserData>((ref) {
             toFirestore: (userData, _) => userData.toMap(),
           );
 
-  return userDoc.snapshots().map((snapshot) => snapshot.data()!);
+  final doc = await userDoc.get();
+
+  if (!doc.exists) {
+    userDoc.set(UserData.defaultData());
+  }
+
+  yield* userDoc.snapshots().map((snapshot) => snapshot.data()!);
 });
