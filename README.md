@@ -1,9 +1,17 @@
-# mobile
+# plant-tracker-mobile
 
-## Build container
+A mobile application development project built using the Flutter framework for plant tracking.
+
+<div style="display:flex;">
+    <img src="https://github.com/plant-tracker/mobile/assets/49527545/b5cbd08d-f1a0-4d81-bfaf-bfbe3f541be2" alt="Image 1" width="25%">
+    <img src="https://github.com/plant-tracker/mobile/assets/49527545/4f5287ad-4f77-4852-979c-d6a5f6a3fa3a" alt="Image 2" width="25%">
+</div>
+
+
+## Development
 This application uses [Docker](https://www.docker.com/) for development.
 
-To create a container for development, run in the root folder:
+Run these commands in a root folder of the cloned repository to create containers:
 ```shell
 docker-compose build
 docker-compose up -d
